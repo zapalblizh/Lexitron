@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+
+    --container-copy-xs: 25ch;
+    --container-copy-sm: 45ch;
+    --container-copy-md: 55ch;
+    --container-copy-lg: 65ch;
+    --container-copy-xl: 75ch;
+    --container-copy-2xl: 85ch;
+
+    --color-transparent: transparent;
+    --color-current: currentColor;
+    --color-inherit: inherit;
+    --color-white: #fff;
+    --color-black: #000;
+
+
+}
+
+@layer components {
+    .container {
+        @apply max-w-(--breakpoint-2xl) mx-auto;
+    }
+}
