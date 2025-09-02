@@ -1,52 +1,24 @@
-import '../css/main.css'
-import { useState } from "react";
-import Tile from "./Tile.jsx";
+// import { useState } from "react";
 import multipliers from "../_data/multipliers.js";
 
-function Board() {
+const SIZE_OF_GRID = 15;
+
+export default function Board() {
+  /*
   const [startSelected, setStartSelected] = useState(false);
   const [endSelected, setEndSelected] = useState(false);
   let [positionsOfSelected, setPosSelected] = useState([]);
+  */
 
-  // Creates Initial Grid for Scrabble Game (15x15 with bonuses)
-  const [grid, setGrid] = useState(() => {
-    return Array.from({ length: 15 }, (_, row) =>
-        Array.from({ length: 15 }, (_, col) => {
-          let bonus = "";
-
-          if (row === 7 && col === 7) {
-            bonus = "center";
-          }
-          else {
-            for (let i = 0; i < Object.keys(multipliers).length; i++) {
-              const obj = multipliers[Object.keys(multipliers)[i]];
-
-              if (obj[row] && obj[row].includes(col)) {
-                bonus = ["lx2", "lx3", "wx2", "wx3"][i];
-                break;
-              }
-            }
-          }
-
-          return {
-            bonus,
-            letter: "",
-            row,
-            col,
-            selected: "",
-          };
-        })
-    );
-  });
-
+  /*
   const checkState = () => {
     if (!startSelected) {
       setStartSelected(true);
-      return "select-start border-4 border-green-500"
+      return "select-start border-2 md:border-4 border-green-500"
     }
     else if (!endSelected) {
       setEndSelected(true);
-      return "select-end border-4 border-red-500"
+      return "select-end border-2 md:border-4 border-red-500"
     }
     else {
       setStartSelected(false);
@@ -81,23 +53,33 @@ function Board() {
       return updated;
     });
   };
+  */
 
   return (
-      <div className="grid inline-grid grid-cols-15 border border-1">
-        {grid.flat().map(({ row, col, bonus, letter, selected }) => (
-            <Tile
-                key={`${row}-${col}`}
-                row={row}
-                col={col}
-                bonus={bonus}
-                letter={letter}
-                selected={selected}
-                temp={positionsOfSelected}
-                update={() => updateGrid(row, col)}
-            />
-        ))}
+      <div className="grid border" style={{ gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
+
+        {(() => {
+          let tiles = [];
+          let id = 0;
+
+          for (let row = 0; row < SIZE_OF_GRID; row++) {
+            for (let col = 0; col < SIZE_OF_GRID; col++) {
+              let bonus = multipliers.find(([r, c]) => r === row && c === col)?.[2] ?? '';
+
+              tiles.push(
+                  <div key={id} className={`tile ${bonus}`}>
+                    <button className="w-full h-full">
+                      <span className={'tile-text'}></span>
+                    </button>
+                  </div>
+              );
+
+              id++;
+            }
+          }
+
+          return tiles;
+        })()}
       </div>
   );
 }
-
-export default Board;
