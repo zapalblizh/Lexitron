@@ -67,7 +67,7 @@ export default function Board() {
               let bonus = multipliers.find(([r, c]) => r === row && c === col)?.[2] ?? '';
 
               tiles.push(
-                  <div key={id} className={`tile ${bonus}`}>
+                  <div key={id} data-selectedFirst={true} data-selectedLast={true} data-row={row} data-col={col} className={`tile ${bonus}`}>
                     <button className="w-full h-full">
                       <span className={'tile-text'}></span>
                     </button>
