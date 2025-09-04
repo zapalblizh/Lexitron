@@ -9,13 +9,6 @@
     --container-copy-xl: 75ch;
     --container-copy-2xl: 85ch;
 
-    --tile-default: 20px;
-    --tile-sm: 28px;
-    --tile-md: 36px;
-    --tile-lg: 44px;
-    --tile-xl: 52px;
-    --tile-2xl: 60px;
-
     --color-transparent: transparent;
     --color-current: currentColor;
     --color-inherit: inherit;
@@ -31,8 +24,8 @@
     }
 
     .tile {
-        @apply size-[var(--tile-default)] sm:size-[var(--tile-sm)] md:size-[var(--tile-md)]
-        lg:size-[var(--tile-lg)] xl:size-[var(--tile-xl)] 2xl:size-[var(--tile-2xl)];
+        height: clamp(1.25rem, -1.875rem + 10vw, 3.75rem);
+        width: clamp(1.25rem, -1.875rem + 10vw, 3.75rem);
         @apply border flex justify-center items-center;
     }
 

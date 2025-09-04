@@ -1,85 +1,74 @@
 // import { useState } from "react";
 import multipliers from "../_data/multipliers.js";
+import {use, useState} from "react";
 
 const SIZE_OF_GRID = 15;
 
 export default function Board() {
-  /*
-  const [startSelected, setStartSelected] = useState(false);
-  const [endSelected, setEndSelected] = useState(false);
-  let [positionsOfSelected, setPosSelected] = useState([]);
-  */
 
-  /*
-  const checkState = () => {
-    if (!startSelected) {
-      setStartSelected(true);
-      return "select-start border-2 md:border-4 border-green-500"
+    const [startSelected, setStartSelected] = useState(false);
+    const [endSelected, setEndSelected] = useState(false);
+    const [start, setStart] = useState({});
+    const [end, setEnd] = useState({});
+
+    const updateState = (row, col) => {
+        if (!startSelected) {
+            setStartSelected(true);
+            setStart({ row, col });
+        }
+        else if (start.row === row && start.col === col) {
+            setStartSelected(false);
+            setStart({});
+        }
+        else if (!endSelected) {
+            setEndSelected(true);
+            setEnd({ row, col });
+        }
+        else if (end.row === row && end.col === col) {
+            setEndSelected(false);
+            setEnd({});
+        }
+        else {
+            setStartSelected(false);
+            setEndSelected(false);
+            setStart({});
+            setEnd({});
+        }
     }
-    else if (!endSelected) {
-      setEndSelected(true);
-      return "select-end border-2 md:border-4 border-red-500"
-    }
-    else {
-      setStartSelected(false);
-      setEndSelected(false);
-      return  ""
-    }
-  }
 
-  const updateGrid = (row, col) => {
-    setGrid(prevGrid => {
-      let updated = prevGrid.map(row => row.map(col => ({ ...col })));
+    return (
+        <div className="grid border" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
 
-      let chosenSelection = checkState();
-      // If we're clearing selection
-      if (chosenSelection === "") {
-        setPosSelected([]);
+            {(() => {
+                let tiles = [];
+                let id = 0;
 
-        return updated.map(row =>
-            row.map(col => (col.selected !== "" ? { ...col, selected: "" } : col))
-        );
-      }
+                for (let row = 0; row < SIZE_OF_GRID; row++) {
+                    for (let col = 0; col < SIZE_OF_GRID; col++) {
+                        let bonus = multipliers.find(([r, c]) => r === row && c === col)?.[2] ?? '';
 
-      if (
-          !updated[row][col].selected.includes("select-start") &&
-          !updated[row][col].selected.includes("select-end")
-      ) {
-        updated[row][col].selected = chosenSelection;
+                        let isStart = start.row === row && start.col === col;
+                        let isEnd = end.row === row && end.col === col;
 
-        setPosSelected(prevPositions => [...prevPositions, { row: row, col: col }]);
-      }
+                        const selectedClass = isStart ? "select-start border-2 md:border-4 border-green-500"
+                            : isEnd ? "select-end border-2 md:border-4 border-red-500"
+                            : "";
 
-      return updated;
-    });
-  };
-  */
+                        tiles.push(
+                            <div onClick={() => updateState(row, col)} key={id} data-row={row} data-col={col}
+                                 className={`tile ${bonus} ${selectedClass}`}>
+                                <button className="w-full h-full">
+                                    <span className={'tile-text'}></span>
+                                </button>
+                            </div>
+                        );
 
-  return (
-      <div className="grid border" style={{ gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
+                        id++;
+                    }
+                }
 
-        {(() => {
-          let tiles = [];
-          let id = 0;
-
-          for (let row = 0; row < SIZE_OF_GRID; row++) {
-            for (let col = 0; col < SIZE_OF_GRID; col++) {
-              let bonus = multipliers.find(([r, c]) => r === row && c === col)?.[2] ?? '';
-
-              tiles.push(
-                  <div key={id} data-selectedfirst={true} data-selectedlast={true} data-row={row} data-col={col} className={`tile ${bonus}`}>
-                    <button className="w-full h-full">
-                      <span className={'tile-text'}></span>
-                    </button>
-                  </div>
-              );
-
-              id++;
-            }
-          }
-
-          return tiles;
-        })()}
-      </div>
-  );
+                return tiles;
+            })()}
+        </div>
+    );
 }
