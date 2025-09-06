@@ -4,6 +4,6 @@ import Board from './Board.jsx'
 
 createRoot(document.getElementById('board')).render(
   <StrictMode>
-    <Board />
+          <Board />
   </StrictMode>,
 )
