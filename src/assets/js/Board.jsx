@@ -16,7 +16,6 @@ export default function Board() {
     // Word from from input state
     const [word, setWord] = useState('');
 
-
     // 2D board
     const [board, setBoard] = useState(
         () => Array.from({ length: SIZE_OF_GRID }, () => Array(SIZE_OF_GRID).fill(""))
@@ -32,7 +31,7 @@ export default function Board() {
     }
 
     // Handles Submission of a Word from Form
-    const HandleSubmit = (e) => {
+    function HandleSubmit(e) {
         e.preventDefault();
 
         // Check if start or end are not defined
@@ -112,7 +111,7 @@ export default function Board() {
     }
 
     // Adds border to tile depending on what states are enabled
-    const UpdateState = (row, col) => {
+    function UpdateState(row, col) {
         if (!startSelected) {
             setStartSelected(true);
             setStart([row, col]);
@@ -132,7 +131,7 @@ export default function Board() {
         else {
             ResetSelection();
         }
-    };
+    }
 
     // Renders grid and rerenders grid on any useState update
     return (
