@@ -30,54 +30,55 @@ export default function Board() {
         setWord('');
     }
 
+    function VerifyInput() {
+        if (!(/^[a-zA-Z]+$/.test(word)) || typeof word !== 'string') {
+            alert('Word must contain only letters.')
+            return false;
+        }
+        if (start.length !== 2 || end.length !== 2 || (start[0] !== end[0] && start[1] !== end[1])) {
+            alert('Please select start and end of your word horizontally or vertically.');
+            return false;
+        }
+
+        const selectedDistance = (start[0] === end[0] ? end[1] - start[1] : end[0] - start[0]) + 1;
+
+        if (word.length === 0) {
+            alert('Please enter a word to submit.');
+            return false;
+        }
+        if (word.length !== selectedDistance) {
+            alert('Please select a correct distance or make word same length as selected distance.');
+            return false;
+        }
+
+        return true;
+    }
+
     // Handles Submission of a Word from Form
     function HandleSubmit(e) {
         e.preventDefault();
 
-        // Check if start or end are not defined
-        if (start.length !== 2 || end.length !== 2) {
-            ResetSelection();
-            return alert('Please select start and end of your word horizontally or vertically.');
-        }
+        // Returns alerts and true when passes through all checks
+        const isValid = VerifyInput();
 
-        // Horizontal Direction
-        if (start[0] === end[0]) {
-            const constantRow = start[0];
+        if (isValid) {
+            // Constants for grid update
+            const direction = start[0] === end[0] ? "horizontal" : "vertical";
+            const axis = direction === "horizontal" ? start[0] : start[1];
+            const wordStart = direction === "horizontal" ? Math.min(start[1], end[1]) : Math.min(start[0], end[0]);
 
-            // Gets amount of coordinates
-            const colStart = Math.min(start[1], end[1]);
-            const colEnd = Math.max(start[1], end[1]);
-            const length = colEnd - colStart + 1;
+            // console.log(direction, axis, wordStart, word);
 
             UpdateDisplayGrid({
-                direction: "horizontal", // same row -> horizontal
-                constant: constantRow,
-                indices: Array.from({ length: length }, (_, i) => colStart + i),
+                direction: direction,
+                constant: axis,
+                indices: Array.from({ length: word.length }, (_, i) => wordStart + i),
                 word: word
             });
         }
-
-        // Vertical Direction
-        else if (start[1] === end[1]) {
-            const constantCol = start[1];
-
-            // Gets amount of coordinates
-            const rowStart = Math.min(start[0], end[0]);
-            const rowEnd = Math.max(start[0], end[0]);
-            const length = rowEnd - rowStart + 1;
-
-            UpdateDisplayGrid({
-                direction: "vertical", // same col -> vertical
-                constant: constantCol,
-                indices: Array.from({ length: length }, (_, i) => rowStart + i),
-                word: word
-            });
-        }
-
-        // In case of some error (mainly no proper direction), falls into else
         else {
+            // Resets values when VerifyInput returns false
             ResetSelection();
-            alert("Please select start and end of your word horizontally or vertically.");
         }
     }
 
