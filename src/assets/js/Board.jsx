@@ -17,9 +17,21 @@ export default function Board() {
     const [word, setWord] = useState('');
 
     // 2D board
-    const [board, setBoard] = useState(
-        () => Array.from({ length: SIZE_OF_GRID }, () => Array(SIZE_OF_GRID).fill(""))
-    );
+    const [board, setBoard] = useState(() => {
+        const initialBoard = Array.from({ length: SIZE_OF_GRID }, () =>
+            Array.from({ length: SIZE_OF_GRID }, () => ({
+                letter: '',
+                bonus: null,
+            }))
+        );
+
+        for (let i = 0; i < multipliers.length; i++) {
+            initialBoard[multipliers[i][0]][multipliers[i][1]].bonus = multipliers[i][2];
+        }
+
+        return initialBoard;
+    });
+
 
     // Resets all States
     function ResetSelection() {
@@ -96,12 +108,13 @@ export default function Board() {
 
             if (direction === "vertical") {
                 for (let i = 0; i < limit; i++) {
-                    next[indices[i]][constant] = letters[i];
+                    next[indices[i]][constant].letter = letters[i];
+
                 }
             }
             else if (direction === "horizontal") {
                 for (let i = 0; i < limit; i++) {
-                    next[constant][indices[i]] = letters[i];
+                    next[constant][indices[i]].letter = letters[i];
                 }
             }
 
@@ -140,8 +153,6 @@ export default function Board() {
             <div className="grid border" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
                 {board.map((rowArr, row) =>
                     rowArr.map((cell, col) => {
-                        const bonus = multipliers.find(([r, c]) => r === row && c === col)?.[2] ?? '';
-
                         const isStart = start[0] === row && start[1] === col;
                         const isEnd = end[0] === row && end[1] === col;
                         const id = row.toString() + '-' + col.toString();
@@ -152,9 +163,9 @@ export default function Board() {
 
                         return (
                             <div onClick={() => UpdateState(row, col)} key={id} data-row={row} data-col={col}
-                                 className={`tile ${bonus} ${selectedClass}`}>
+                                 className={`tile ${board[row][col].bonus} ${selectedClass}`}>
                                 <button className="w-full h-full">
-                                    <span className={'tile-text'}>{board[row][col]}</span>
+                                    <span className={'tile-text'}>{board[row][col].letter}</span>
                                 </button>
                             </div>
                         );
