@@ -9,7 +9,6 @@ export default function Form() {
             <form onSubmit={HandleSubmit} className="mt-4 flex items-center gap-2">
                 <input
                     type="text"
-                    value={word}
                     onChange={word => setWord(word.target.value)}
                     placeholder="Word (optional)"
                     className="border rounded px-3 py-2"
