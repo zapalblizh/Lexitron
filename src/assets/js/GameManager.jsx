@@ -11,7 +11,7 @@ export function UseGame() {
     return useContext(GameContext);
 }
 
-export function GameManager({ children }) {
+export function GameManager() {
     // 2D board State
     const [board, setBoard] = useState(() => {
         const initialBoard = Array.from({ length: SIZE_OF_GRID }, () =>
