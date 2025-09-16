@@ -1,7 +1,7 @@
 import { UseGame } from "./GameManager.jsx";
 
 export default function Board() {
-    const { board, SIZE_OF_GRID, start, end, UpdateState } = UseGame();
+    const { board, SIZE_OF_GRID, start, end, UpdateState, gameStart } = UseGame();
 
     // Renders grid and rerenders grid on any useState update
     return (
@@ -20,7 +20,7 @@ export default function Board() {
                         return (
                             <div onClick={() => UpdateState(row, col)} key={id} data-row={row} data-col={col}
                                  className={`tile ${board[row][col].bonus} ${selectedClass}`}>
-                                <button className="w-full h-full">
+                                <button className="w-full h-full" disabled={!gameStart}>
                                     <span className={'tile-text'}>{board[row][col].letter}</span>
                                 </button>
                             </div>
