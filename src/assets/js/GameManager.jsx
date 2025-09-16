@@ -28,7 +28,7 @@ export function GameManager() {
         return initialBoard;
     });
 
-    /* ALl Other States */
+    /* Board and word states */
     // States for selecting starting and ending tiles
     const [startSelected, setStartSelected] = useState(false);
     const [endSelected, setEndSelected] = useState(false);
@@ -38,6 +38,9 @@ export function GameManager() {
     // Word from from input state
     const [word, setWord] = useState('');
 
+    /* Form States */
+    const [gameStart, setGameStart] = useState(false);
+    const [playerCount, setPlayerCount] = useState(2);
 
     // Resets all States
     function ResetSelection() {
@@ -46,6 +49,15 @@ export function GameManager() {
         setStart([]);
         setEnd([]);
         setWord('');
+    }
+
+    function UpdateForm(e) {
+        e.preventDefault();
+        setGameStart(true);
+    }
+
+    function UpdatePlayerCount(e) {
+        setPlayerCount(e.target.value);
     }
 
     function VerifyInput() {
@@ -164,6 +176,12 @@ export function GameManager() {
         end,
         word,
         setWord,
+        gameStart,
+        setGameStart,
+        UpdateForm,
+        playerCount,
+        UpdatePlayerCount,
+        setPlayerCount
     };
 
     return (

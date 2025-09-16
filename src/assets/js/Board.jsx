@@ -1,7 +1,6 @@
 import { UseGame } from "./GameManager.jsx";
 
 export default function Board() {
-
     const { board, SIZE_OF_GRID, start, end, UpdateState } = UseGame();
 
     // Renders grid and rerenders grid on any useState update
