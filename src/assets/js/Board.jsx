@@ -1,7 +1,33 @@
-import { UseGame } from "./GameManager.jsx";
+import { UseGame } from "./App.jsx";
 
 export default function Board() {
-    const { board, SIZE_OF_GRID, start, end, UpdateState, gameStart } = UseGame();
+    const {
+        board, SIZE_OF_GRID, start, setStart, end, setEnd, gameStart, startSelected, setStartSelected,
+        endSelected, setEndSelected, ResetSelection
+    } = UseGame();
+
+    // Adds border to tile depending on what states are enabled
+    function UpdateState(row, col) {
+        if (!startSelected) {
+            setStartSelected(true);
+            setStart([row, col]);
+        }
+        else if (start[0] === row && start[1] === col) {
+            setStartSelected(false);
+            setStart([]);
+        }
+        else if (!endSelected) {
+            setEndSelected(true);
+            setEnd([row, col]);
+        }
+        else if (end[0] === row && end[1] === col) {
+            setEndSelected(false);
+            setEnd([]);
+        }
+        else {
+            ResetSelection();
+        }
+    }
 
     // Renders grid and rerenders grid on any useState update
     return (
