@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 function StartForm() {
 
-    const { playerCount, players, setPlayers, setPlayerCount, setGameStart} = UseGame();
+    const { playerCount, players, setPlayers, setPlayerCount, gameStart, setGameStart} = UseGame();
 
     function UpdateForm(props) {
         props.preventDefault();
@@ -44,13 +44,13 @@ function StartForm() {
     }
 
     return (
-        <div>
+        <div className={gameStart ? 'hidden' : 'block'}>
             <form className="flex flex-col items-center gap-4 p-4 w-full" onSubmit={UpdateForm}>
                 <div className="flex flex-col justify-start gap-2 w-full text-start max-w-xs">
                     <span className="text-2xl font-bold">Players</span>
                     <div className="flex flex-col border-2 border-black divide-y-2 divide-black">
                         {players.map((player, i) => (
-                            <div key={nanoid()} className="flex items-center justify-between p-4 gap-4 bg-white">
+                            <div key={player.id} className="flex items-center justify-between p-4 gap-4 bg-white">
                                 <input
                                     type="text"
                                     value={player.name}

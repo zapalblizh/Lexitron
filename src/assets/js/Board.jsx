@@ -31,8 +31,8 @@ export default function Board() {
 
     // Renders grid and rerenders grid on any useState update
     return (
-        <>
-            <div className="grid border" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
+        <div className="flex justify-center items-center">
+            <div className="grid border w-fit" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
                 {board.map((rowArr, row) =>
                     rowArr.map((cell, col) => {
                         const isStart = start[0] === row && start[1] === col;
@@ -54,6 +54,6 @@ export default function Board() {
                     })
                 )}
             </div>
-        </>
+        </div>
     );
 }

@@ -2,7 +2,7 @@ import {UseGame} from "./App.jsx";
 
 function GameForm() {
 
-    const { VerifyInput, UpdateDisplayGrid, ResetSelection, start, end } = UseGame();
+    const { VerifyInput, UpdateDisplayGrid, ResetSelection, start, end, gameStart } = UseGame();
 
     // Handles Submission of a Word from Form
     function HandleSubmit(e) {
@@ -35,8 +35,7 @@ function GameForm() {
     const { word, setWord } = UseGame();
 
     return (
-        <>
-
+        <div className={ gameStart ? 'block' : 'hidden' }>
             <form onSubmit={HandleSubmit} className="mt-4 flex items-center gap-2">
                 <input
                     type="text"
@@ -50,7 +49,7 @@ function GameForm() {
                     Submit
                 </button>
             </form>
-        </>
+        </div>
     )
 }
 

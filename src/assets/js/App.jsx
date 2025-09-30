@@ -12,6 +12,7 @@ export function UseGame() {
 
 function App() {
     const SIZE_OF_GRID = 15;
+    const INITIAL_PLAYER_COUNT = 2;
 
     const player = {
         id: '',
@@ -40,7 +41,7 @@ function App() {
     const [start, setStart] = useState([]); // [row, col]
     const [end, setEnd] = useState([]); // [row, col]
     const [word, setWord] = useState('');
-    const [playerCount, setPlayerCount] = useState(2);
+    const [playerCount, setPlayerCount] = useState(INITIAL_PLAYER_COUNT);
     const [gameStart, setGameStart] = useState(false);
 
     let minPlayers = [];
