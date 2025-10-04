@@ -43,6 +43,7 @@ function App() {
     const [word, setWord] = useState('');
     const [playerCount, setPlayerCount] = useState(INITIAL_PLAYER_COUNT);
     const [gameStart, setGameStart] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     let minPlayers = [];
 
@@ -68,30 +69,6 @@ function App() {
         setWord('');
     }
 
-    function VerifyInput() {
-        if (!(/^[a-zA-Z]+$/.test(word)) || typeof word !== 'string') {
-            alert('Word must contain only letters.')
-            return false;
-        }
-        if (start.length !== 2 || end.length !== 2 || (start[0] !== end[0] && start[1] !== end[1])) {
-            alert('Please select start and end of your word horizontally or vertically.');
-            return false;
-        }
-
-        const selectedDistance = (start[0] === end[0] ? end[1] - start[1] : end[0] - start[0]) + 1;
-
-        if (word.length === 0) {
-            alert('Please enter a word to submit.');
-            return false;
-        }
-        if (word.length !== selectedDistance) {
-            alert('Please select a correct distance or make word same length as selected distance.');
-            return false;
-        }
-
-        return true;
-    }
-
     function UpdateDisplayGrid({ direction, constant, indices, word }) {
         console.log(word);
 
@@ -107,7 +84,6 @@ function App() {
             if (direction === "vertical") {
                 for (let i = 0; i < limit; i++) {
                     next[indices[i]][constant].letter = letters[i];
-
                 }
             }
             else if (direction === "horizontal") {
@@ -136,7 +112,7 @@ function App() {
         players, setPlayers,
         ResetSelection,
         UpdateDisplayGrid,
-        VerifyInput,
+        errorMessage, setErrorMessage,
     }
 
     return (
