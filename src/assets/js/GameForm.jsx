@@ -18,6 +18,11 @@ function GameForm() {
             return false;
         }
 
+        if (start[0] > end[0] || start[1] > end[1]) {
+            setErrorMessage('Please select start and end of your word top to bottom or left to right.')
+            return false;
+        }
+
         const selectedDistance = (start[0] === end[0] ? end[1] - start[1] : end[0] - start[0]) + 1;
 
         if (word.length === 0) {
