@@ -2,7 +2,7 @@ import {UseGame} from "./App.jsx";
 
 function GameForm() {
 
-    const { UpdateDisplayGrid, ResetSelection, start, end, gameStart, errorMessage, setErrorMessage, players, board, SIZE_OF_GRID } = UseGame();
+    const { UpdateDisplayGrid, ResetSelection, start, end, gameStart, errorMessage, setErrorMessage, players, board, SIZE_OF_GRID, word, setWord, wordList } = UseGame();
 
     // Checks word for validity
     function VerifyWordPosition() {
@@ -85,19 +85,16 @@ function GameForm() {
         return true;
     }
 
-    function WordCheck() {
-
-    }
-
     // Handles Submission of a Word from Form
     function HandleSubmit(e) {
         e.preventDefault();
 
+        const uppercaseWord = word.toUpperCase();
+
         // Returns alerts and true when passes through all checks
         const isValid = VerifyWordPosition();
 
-        if (isValid) {
-            WordCheck();
+        if (isValid && wordList.has(uppercaseWord)) {
 
             // Constants for grid update
             const direction = start[0] === end[0] ? "horizontal" : "vertical";
@@ -110,16 +107,18 @@ function GameForm() {
                 direction: direction,
                 constant: axis,
                 indices: Array.from({ length: word.length }, (_, i) => wordStart + i),
-                word: word
+                word: uppercaseWord
             });
         }
         else {
+            if (!wordList.has(uppercaseWord)) {
+                setErrorMessage('Please enter a word that is included in the English dictionary.')
+            }
+
             // Resets values when VerifyInput returns false
             ResetSelection();
         }
     }
-
-    const { word, setWord } = UseGame();
 
     return (
         <div className={`${gameStart ? 'block' : 'hidden'} flex flex-col justify-center items-center`}>

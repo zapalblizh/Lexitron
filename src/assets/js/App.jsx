@@ -1,4 +1,4 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import Board from "./Board.jsx";
 import Form from "./Form.jsx";
 import multipliers from "../_data/multipliers.js";
@@ -41,9 +41,29 @@ function App() {
     const [start, setStart] = useState([]); // [row, col]
     const [end, setEnd] = useState([]); // [row, col]
     const [word, setWord] = useState('');
+
     const [playerCount, setPlayerCount] = useState(INITIAL_PLAYER_COUNT);
     const [gameStart, setGameStart] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [wordList, setWordList] = useState(new Set());
+
+    useEffect(() => {
+        fetch('../../../twl.txt')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.text();
+            })
+            .then((text) => {
+                const words = text.replace(/\r/g, '').split('\n');
+                setWordList(new Set(words));
+            })
+            .catch(error => {
+                console.error("Failed to load word list:", error);
+                setErrorMessage("Could not load word list. Please try again later.");
+            });
+    }, []);
 
     let minPlayers = [];
 
@@ -113,6 +133,7 @@ function App() {
         ResetSelection,
         UpdateDisplayGrid,
         errorMessage, setErrorMessage,
+        wordList
     }
 
     return (
