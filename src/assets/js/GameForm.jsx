@@ -1,8 +1,9 @@
 import {UseGame} from "./App.jsx";
+import scores from "../_data/game.js";
 
 function GameForm() {
 
-    const { UpdateDisplayGrid, ResetSelection, start, end, gameStart, errorMessage, setErrorMessage, players, board, SIZE_OF_GRID, word, setWord, wordList } = UseGame();
+    const { UpdateDisplayGrid, ResetSelection, start, end, gameStart, errorMessage, setErrorMessage, players, board, SIZE_OF_GRID, word, setWord, wordList, currentWord, setCurrentWord } = UseGame();
 
     // Checks word for validity
     function VerifyWordPosition() {
@@ -85,6 +86,24 @@ function GameForm() {
         return true;
     }
 
+    function ScoreWord() {
+        const wordLetterArray = word.toUpperCase().split("");
+        let wordScore = 0;
+
+        // Counts word score
+        for (let i = 0; i < wordLetterArray.length; i++) {
+            for (const [key, value] of Object.entries(scores['points']) ) {
+                if (value.includes(wordLetterArray[i])) {
+                    wordScore = wordScore + key;
+                }
+            }
+        }
+
+        // Calculate bonuses for word
+
+
+    }
+
     // Handles Submission of a Word from Form
     function HandleSubmit(e) {
         e.preventDefault();
@@ -100,22 +119,34 @@ function GameForm() {
             const direction = start[0] === end[0] ? "horizontal" : "vertical";
             const axis = direction === "horizontal" ? start[0] : start[1];
             const wordStart = direction === "horizontal" ? Math.min(start[1], end[1]) : Math.min(start[0], end[0]);
-
             // console.log(direction, axis, wordStart, word);
 
+            const indexList = Array.from({ length: word.length }, (_, i) => wordStart + i)
             UpdateDisplayGrid({
                 direction: direction,
                 constant: axis,
-                indices: Array.from({ length: word.length }, (_, i) => wordStart + i),
+                indices: indexList,
                 word: uppercaseWord
             });
+
+            // return array with all words found with corresponding scores
+            // [{
+            //   word: 'WORD',
+            //   score: 100,
+            // }]
+            const scoreWordsArray = ScoreWord()
+
+            // TODO: Update players[0] to currentPlayer
+            // Player, Score, Direction, Indexes, Constant
+            setCurrentWord([players[0], scoreWordsArray, direction, indexList, axis]);
+
+
         }
         else {
             if (!wordList.has(uppercaseWord)) {
                 setErrorMessage('Please enter a word that is included in the English dictionary.')
             }
 
-            // Resets values when VerifyInput returns false
             ResetSelection();
         }
     }

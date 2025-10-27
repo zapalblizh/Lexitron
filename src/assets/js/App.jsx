@@ -47,6 +47,9 @@ function App() {
     const [errorMessage, setErrorMessage] = useState('');
     const [wordList, setWordList] = useState(new Set());
 
+    // Word, Player, Score, Direction, Indexes, Constant
+    const [currentWord, setCurrentWord] = useState(["", "", 0, "", [], 0]);
+
     useEffect(() => {
         fetch('../../../twl.txt')
             .then((response) => {
@@ -79,6 +82,7 @@ function App() {
     }
 
     const [players, setPlayers] = useState(minPlayers);
+    const [currentPlayer, setCurrentPlayer] = useState(0);
 
     // Resets Selection
     function ResetSelection() {
@@ -133,7 +137,9 @@ function App() {
         ResetSelection,
         UpdateDisplayGrid,
         errorMessage, setErrorMessage,
-        wordList
+        wordList,
+        currentWord, setCurrentWord,
+
     }
 
     return (

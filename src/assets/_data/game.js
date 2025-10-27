@@ -8,5 +8,4 @@ export default {
         8: ['J', 'X'],
         10: ['Q','Z']
     }
-
 }
