@@ -1,7 +1,7 @@
-import { UseGame } from "./App.jsx";
+import { UseGame } from "./GameContext.js";
 import { nanoid } from "nanoid";
 
-function StartForm() {
+export default function StartForm() {
 
     const { playerCount, players, setPlayers, setPlayerCount, gameStart, setGameStart} = UseGame();
 
@@ -82,5 +82,3 @@ function StartForm() {
         </div>
     )
 }
-
-export default StartForm;

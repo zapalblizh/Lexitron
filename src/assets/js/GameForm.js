@@ -1,9 +1,11 @@
-import {UseGame} from "./App.jsx";
+import {UseGame} from "./App.js";
 import scores from "../_data/game.js";
+import {useContext} from "react";
+import { UseGame } from "./GameContext.js";
 
 function GameForm() {
 
-    const { UpdateDisplayGrid, ResetSelection, start, end, gameStart, errorMessage, setErrorMessage, players, board, SIZE_OF_GRID, word, setWord, wordList, currentWord, setCurrentWord } = UseGame();
+    const { UpdateDisplayGrid, ResetSelection, start, end, gameStart, errorMessage, setErrorMessage, players, board, SIZE_OF_GRID, word, setWord, wordList, currentWord, setCurrentWord } = useContext(GameContext);
 
     // Checks word for validity
     function VerifyWordPosition() {
@@ -139,7 +141,6 @@ function GameForm() {
             // TODO: Update players[0] to currentPlayer
             // Player, Score, Direction, Indexes, Constant
             setCurrentWord([players[0], scoreWordsArray, direction, indexList, axis]);
-
 
         }
         else {
