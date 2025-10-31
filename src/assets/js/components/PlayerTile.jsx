@@ -2,8 +2,8 @@ import {GameContext} from "../GameContext.jsx";
 import {useContext} from "react";
 import {nanoid} from "nanoid";
 
-export const PlayerTile = ({Player, index}) => {
-    const {playerCount, players, setPlayers, setErrorMessage} = useContext(GameContext);
+export const PlayerTile = ({Player}) => {
+    const {players, setPlayers, setErrorMessage} = useContext(GameContext);
 
     const HandleNameChange = ({Player, name}) => {
         setPlayers(
@@ -21,6 +21,7 @@ export const PlayerTile = ({Player, index}) => {
             const newPlayer = {
                 name: `Player ${players.length + 1}`,
                 id: nanoid(),
+                currentPlayer: false,
                 score: 0,
                 words: []
             };

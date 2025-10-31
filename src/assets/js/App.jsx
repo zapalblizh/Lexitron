@@ -1,34 +1,23 @@
 import {Board} from "./components/Board.jsx";
 import {StartForm} from "./components/StartForm.jsx";
-// import GameForm from "./GameForm.js";
+import GameForm from "./components/GameForm.jsx";
 
 import {GameProvider, GameContext} from "./GameContext.jsx";
 import {useContext} from "react";
+import {ErrorComponent} from "./components/ErrorComponent.jsx";
 
 function App() {
+    const {gameStart} = useContext(GameContext);
 
     return (
         <div>
             <GameProvider>
                 <Board />
-                <StartForm />
+                {gameStart ? <GameForm /> : <StartForm />}
+                <ErrorComponent />
             </GameProvider>
         </div>
     )
 }
-
-/*
-* {
-* // Add Component to deal with errors
-                !game.gameStart ? <StartForm />
-                    : <GameForm />
-            }
-           <StartForm />
-
-
-                <div className="flex items-center justify-center p-4 text-red-400">
-                    <span>{errorMessage}</span>
-                </div>
-* */
 
 export default App;

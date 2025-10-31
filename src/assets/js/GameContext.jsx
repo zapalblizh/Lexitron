@@ -33,6 +33,7 @@ export const GameProvider = ({children}) => {
         const newPlayer = {
             name: `Player ${i + 1}`,
             id: nanoid(),
+            currentPlayer: false,
             score: 0,
             words: []
         };
@@ -62,20 +63,18 @@ export const GameProvider = ({children}) => {
     const [gameState, setGameState] = useState({
         start: {
             status: false,
-            direction: '',
             row: null,
             col: null
         },
         end: {
             status: false,
-            direction: '',
             row: null,
             col: null
         }
     });
 
     const [currentWord, setCurrentWord] = useState({
-        player: {},
+        turn: 0,
         selection: {
             direction: '',
             indices: [],
@@ -87,13 +86,6 @@ export const GameProvider = ({children}) => {
 
     const [gameStart, setGameStart] = useState(false);
 
-    const [currentPlayer, setCurrentPlayer] = useState({
-        id: '',
-        name: '',
-        score: 0,
-        words: [],
-    });
-
     const contextValue = {
         turns, setTurn,
         players, setPlayers,
@@ -103,7 +95,6 @@ export const GameProvider = ({children}) => {
         gameState, setGameState,
         currentWord, setCurrentWord,
         gameStart, setGameStart,
-        currentPlayer, setCurrentPlayer
     };
 
     return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;
