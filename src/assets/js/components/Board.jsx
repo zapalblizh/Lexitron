@@ -1,9 +1,12 @@
-import { ResetGameState } from "../functions/ResetGameState.js";
-import {nanoid} from "nanoid";
+import {GameContext} from "../GameContext.jsx";
+import {useContext} from "react";
+import {ResetGameState} from "../functions/ResetGameState.jsx";
+import { nanoid } from "nanoid";
 
-export default function Board({ board, gameState, setGameState, setCurrentWord, gameStart, setGameStart, setCurrentPlayer, SIZE_OF_GRID }) {
+export const Board = () => {
+    const {board, SIZE_OF_GRID, gameStart, gameState, setGameState} = useContext(GameContext);
 
-    const updateSelectionStatus = (row, col) => {
+    const UpdateSelectionStatus = (row, col) => {
         const newStart = {};
         const newEnd = {};
 
@@ -28,8 +31,13 @@ export default function Board({ board, gameState, setGameState, setCurrentWord, 
             newEnd.col = 0;
         }
         else {
-            ResetGameState({setGameState, setCurrentWord, setGameStart, setCurrentPlayer});
+            ResetGameState();
         }
+
+        setGameState({
+            start: newStart,
+            end: newEnd,
+        });
     }
 
     // Renders grid and rerenders grid on any useState update
@@ -46,7 +54,7 @@ export default function Board({ board, gameState, setGameState, setCurrentWord, 
                                 : "";
 
                         return (
-                            <div onClick={() => updateSelectionStatus(row, col)} key={nanoid()} data-row={row} data-col={col}
+                            <div onClick={() => UpdateSelectionStatus(row, col)} key={nanoid()} data-row={row} data-col={col}
                                  className={`tile ${board[row][col].bonus} ${selectedClass}`}>
                                 <button className="w-full h-full" disabled={!gameStart}>
                                     <span className={'tile-text'}>{board[row][col].letter}</span>

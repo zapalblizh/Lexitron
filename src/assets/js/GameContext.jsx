@@ -1,18 +1,16 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import {nanoid} from "nanoid";
 import multipliers from "../_data/multipliers.js";
 
-// 1. Create context
-const GameContext = createContext(null);
+export const GameContext = createContext();
 
-// 2. Create provider component
-export function GameProvider({ children }) {
+export const GameProvider = ({children}) => {
     const INITIAL_PLAYER_COUNT = 2;
     const SIZE_OF_GRID = 15;
 
     const [turns, setTurn] = useState([]);
-    const [playerCount, setPlayerCount] = useState(INITIAL_PLAYER_COUNT);
     const [wordDict, setWordDict] = useState(new Set());
+    const [errorMessage, setErrorMessage] = useState('No');
 
     const [board, setBoard] = useState(() => {
         const initialBoard = Array.from({ length: SIZE_OF_GRID }, () =>
@@ -31,7 +29,7 @@ export function GameProvider({ children }) {
 
     // Creates array with two players and inserts it as initial state
     let  minPlayers = [];
-    for (let i = 0; i < playerCount; i++) {
+    for (let i = 0; i < INITIAL_PLAYER_COUNT; i++) {
         const newPlayer = {
             name: `Player ${i + 1}`,
             id: nanoid(),
@@ -61,11 +59,52 @@ export function GameProvider({ children }) {
             });
     }, []);
 
-    const value = { turns, setTurn, playerCount, setPlayerCount, players, setPlayers, wordDict, board, setBoard, SIZE_OF_GRID };
+    const [gameState, setGameState] = useState({
+        start: {
+            status: false,
+            direction: '',
+            row: null,
+            col: null
+        },
+        end: {
+            status: false,
+            direction: '',
+            row: null,
+            col: null
+        }
+    });
 
-    return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
-}
+    const [currentWord, setCurrentWord] = useState({
+        player: {},
+        selection: {
+            direction: '',
+            indices: [],
+            constant: '',
+        },
+        word: "",
+        wordScore: 0
+    });
 
-export function UseGame() {
-    return useContext(GameContext);
+    const [gameStart, setGameStart] = useState(false);
+
+    const [currentPlayer, setCurrentPlayer] = useState({
+        id: '',
+        name: '',
+        score: 0,
+        words: [],
+    });
+
+    const contextValue = {
+        turns, setTurn,
+        players, setPlayers,
+        wordDict, SIZE_OF_GRID,
+        board, setBoard,
+        errorMessage, setErrorMessage,
+        gameState, setGameState,
+        currentWord, setCurrentWord,
+        gameStart, setGameStart,
+        currentPlayer, setCurrentPlayer
+    };
+
+    return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;
 }

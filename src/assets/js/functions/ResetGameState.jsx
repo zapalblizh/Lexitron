@@ -1,4 +1,9 @@
-export function ResetGameState({setGameState, setCurrentWord, setGameStart, setCurrentPlayer}) {
+import {useContext} from "react";
+import {GameContext} from "../GameContext.jsx";
+
+export const ResetGameState = () => {
+    const {setGameState, setCurrentWord, setGameStart, setCurrentPlayer} = useContext(GameContext);
+
     setGameState({
         start: {
             status: false,
