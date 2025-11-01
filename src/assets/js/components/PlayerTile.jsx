@@ -23,7 +23,7 @@ export const PlayerTile = ({Player}) => {
                 id: nanoid(),
                 currentPlayer: false,
                 score: 0,
-                words: []
+                turns: []
             };
 
             setPlayers([...players, newPlayer]);

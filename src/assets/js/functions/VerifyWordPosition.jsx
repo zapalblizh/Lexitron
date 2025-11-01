@@ -5,7 +5,8 @@ export const VerifyWordPosition = () => {
     const {board, gameState, currentWord, players, SIZE_OF_GRID, setErrorMessage} = useContext(GameContext);
 
     // Basic verification for errors in creation or selection
-    if (!(/^[a-zA-Z]+$/.test(currentWord.word))) {
+    // TODO: Issue here?
+    if (!(/^[a-zA-Z]+$/.test(currentWord))) {
         setErrorMessage('Word must contain only letters.')
         // Add reset for selection only
         return false;
@@ -23,11 +24,11 @@ export const VerifyWordPosition = () => {
 
     const selectedDistance = Math.abs(gameState.end.row - gameState.start.row || gameState.end.col - gameState.start.col) + 1;
 
-    if (currentWord.word.length === 0) {
+    if (currentWord.length === 0) {
         setErrorMessage('Please enter a word to submit.')
         return false;
     }
-    if (currentWord.word.length !== selectedDistance) {
+    if (currentWord.length !== selectedDistance) {
         setErrorMessage('Please select a correct distance or make word same length as selected distance.')
         return false;
     }
@@ -41,9 +42,9 @@ export const VerifyWordPosition = () => {
     let connectionFound = false;
     let conflictFound = false;
     const center = Math.floor(SIZE_OF_GRID / 2);
-    const letters = currentWord.word.toUpperCase().split("");
+    const letters = currentWord.toUpperCase().split("");
 
-    for (let i = 0; i < currentWord.word.length; i++) {
+    for (let i = 0; i < currentWord.length; i++) {
         let axis = wordStart + i;
         const currentRow = isHorizontal ? gameState.start.row : axis;
         const currentCol = isHorizontal ? axis : gameState.start.col;

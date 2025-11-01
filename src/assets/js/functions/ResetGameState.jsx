@@ -2,30 +2,20 @@ import {useContext} from "react";
 import {GameContext} from "../GameContext.jsx";
 
 export const ResetGameState = () => {
-    const {setGameState, setCurrentWord, setGameStart, setCurrentPlayer} = useContext(GameContext);
+    const {setGameState, setCurrentWord} = useContext(GameContext);
 
     setGameState({
         start: {
             status: false,
-            direction: '',
-            row: 0,
-            col: 0
+            row: null,
+            col: null
         },
         end: {
             status: false,
-            direction: '',
-            row: 0,
-            col: 0
+            row: null,
+            col: null
         }
     });
 
-    setCurrentWord({
-        player: {},
-        selection: {},
-        word: "",
-        wordScore: 0
-    });
-
-    setGameStart(false);
-    setCurrentPlayer({});
+    setCurrentWord("");
 }

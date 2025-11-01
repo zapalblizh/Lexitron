@@ -1,11 +1,12 @@
 import {useContext} from "react";
 import {GameContext} from "../GameContext.jsx";
 
-export const UpdateGrid = () => {
+export const UpdateGrid = (turn) => {
     const { board, setBoard, gameState, currentWord } = useContext(GameContext);
 
-    const letters = currentWord.word.toUpperCase().split("");
+    const letters = currentWord.toUpperCase().split("");
     if (letters.length === 0) return;
+
     const next = board.map(row => row.slice());
 
     currentWord.selection.indices.forEach(i => {

@@ -35,7 +35,7 @@ export const GameProvider = ({children}) => {
             id: nanoid(),
             currentPlayer: false,
             score: 0,
-            words: []
+            turns: []
         };
 
         minPlayers = [...minPlayers, newPlayer];
@@ -73,17 +73,7 @@ export const GameProvider = ({children}) => {
         }
     });
 
-    const [currentWord, setCurrentWord] = useState({
-        turn: 0,
-        selection: {
-            direction: '',
-            indices: [],
-            constant: '',
-        },
-        word: "",
-        wordScore: 0
-    });
-
+    const [currentWord, setCurrentWord] = useState("");
     const [gameStart, setGameStart] = useState(false);
 
     const contextValue = {
