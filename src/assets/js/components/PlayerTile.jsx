@@ -26,7 +26,9 @@ export const PlayerTile = ({Player}) => {
                 turns: []
             };
 
-            setPlayers([...players, newPlayer]);
+            setPlayers(prev => {
+                return [...prev, newPlayer];
+            });
         }
     }
 
@@ -56,7 +58,7 @@ export const PlayerTile = ({Player}) => {
                 </svg>
             </button>
 
-            <button onClick={AddPlayer} className="text-[24px] font-bold">+</button>
+            <button type="button" onClick={() => AddPlayer()} className="text-[24px] font-bold">+</button>
         </div>
     )
 }

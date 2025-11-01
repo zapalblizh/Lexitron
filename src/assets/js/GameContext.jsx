@@ -10,7 +10,7 @@ export const GameProvider = ({children}) => {
 
     const [turns, setTurn] = useState([]);
     const [wordDict, setWordDict] = useState(new Set());
-    const [errorMessage, setErrorMessage] = useState('No');
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const [board, setBoard] = useState(() => {
         const initialBoard = Array.from({ length: SIZE_OF_GRID }, () =>

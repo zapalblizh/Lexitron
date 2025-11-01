@@ -6,8 +6,9 @@ export const PlayerSelector = () => {
 
     const handlePlayerSelect = (id) => {
         setPlayers(prevPlayers => {
+
             return prevPlayers.map(player => {
-                return {...player, currentPlayer: player.id === id};
+                return {...player, currentPlayer: (player.id === id) ? !player.currentPlayer : false};
             })
         })
     }
