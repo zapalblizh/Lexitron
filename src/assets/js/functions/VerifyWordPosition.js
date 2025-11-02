@@ -1,36 +1,24 @@
-import {useContext} from "react";
-import {GameContext} from "../GameContext.jsx";
+export const useVerifyWordPosition = (board, gameState, currentWord, players, gridSize) => {
 
-export const VerifyWordPosition = () => {
-    const {board, gameState, currentWord, players, SIZE_OF_GRID, setErrorMessage} = useContext(GameContext);
-
-    // Basic verification for errors in creation or selection
-    // TODO: Issue here?
     if (!(/^[a-zA-Z]+$/.test(currentWord))) {
-        setErrorMessage('Word must contain only letters.')
-        // Add reset for selection only
-        return false;
+        return { valid: false, message: 'Word must contain only letters.'};
     }
 
     if (!gameState.start.status || !gameState.end.status || (gameState.start.row !== gameState.end.row && gameState.start.col !== gameState.end.col)) {
-        setErrorMessage('Please select start and end of your word horizontally or vertically.')
-        return false;
+        return { valid: false, message: 'Please select start and end of your word horizontally or vertically.'};
     }
 
     if (gameState.start.row > gameState.end.row || gameState.start.col > gameState.end.col) {
-        setErrorMessage('Please select start and end of your word top to bottom or left to right.')
-        return false;
+        return { valid: false, message: 'Please select start and end of your word top to bottom or left to right.'};
     }
 
     const selectedDistance = Math.abs(gameState.end.row - gameState.start.row || gameState.end.col - gameState.start.col) + 1;
 
     if (currentWord.length === 0) {
-        setErrorMessage('Please enter a word to submit.')
-        return false;
+        return { valid: false, message: 'Please enter a word to submit.'};
     }
     if (currentWord.length !== selectedDistance) {
-        setErrorMessage('Please select a correct distance or make word same length as selected distance.')
-        return false;
+        return { valid: false, message: 'Please select a correct distance or make word same length as selected distance.'};
     }
 
     // Check tiles of placement for word
@@ -41,7 +29,7 @@ export const VerifyWordPosition = () => {
     let centerFound = false;
     let connectionFound = false;
     let conflictFound = false;
-    const center = Math.floor(SIZE_OF_GRID / 2);
+    const center = Math.floor(gridSize / 2);
     const letters = currentWord.toUpperCase().split("");
 
     for (let i = 0; i < currentWord.length; i++) {
@@ -73,12 +61,10 @@ export const VerifyWordPosition = () => {
     }
 
     if (players.every(p => p.score === 0) && !centerFound) {
-        setErrorMessage('Please select your tiles to have center tile between initial and ending tiles')
-        return false;
+        return { valid: false, message: 'Please select your tiles to have center tile between initial and ending tiles'};
     }
     else if (conflictFound) {
-        setErrorMessage('Please select a word that fits in the selected tiles and does not replace existing letters.')
-        return false;
+        return { valid: false, message: 'Please select a word that fits in the selected tiles and does not replace existing letters.'};
     }
 
     return true;

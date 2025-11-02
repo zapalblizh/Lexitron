@@ -1,44 +1,43 @@
 import {GameContext} from "../GameContext.jsx";
-import {useContext} from "react";
-import {ResetGameState} from "../functions/ResetGameState.jsx";
-import { nanoid } from "nanoid";
+import {useContext, useCallback} from "react";
+
+const INITIAL_TURN = {
+    status: false,
+    row: null,
+    col: null
+};
+
+const INITIAL_GAME_STATE = {
+    start: INITIAL_TURN,
+    end: INITIAL_TURN
+};
 
 export const Board = () => {
-    const {board, SIZE_OF_GRID, gameStart, gameState, setGameState} = useContext(GameContext);
+    const {board, SIZE_OF_GRID, gameStart, gameState, setGameState, setCurrentWord} = useContext(GameContext);
 
-    const UpdateSelectionStatus = (row, col) => {
-        const newStart = {};
-        const newEnd = {};
+    const UpdateSelectionStatus = useCallback((row, col) => {
+        setGameState(prev => {
+            const { start, end } = prev;
 
-        if (!gameState.start.status) {
-            newStart.status = true;
-            newStart.row = row;
-            newStart.col = col;
-        }
-        else if (gameState.start.row === row && gameState.start.col === col) {
-            newStart.status = false;
-            newStart.row = 0;
-            newStart.col = 0;
-        }
-        else if (!gameState.end.status) {
-            newEnd.status = true;
-            newEnd.row = row;
-            newEnd.col = col;
-        }
-        else if (gameState.end.row === row && gameState.end.col === col) {
-            newEnd.status = false;
-            newEnd.row = 0;
-            newEnd.col = 0;
-        }
-        else {
-            ResetGameState();
-        }
+            if (!start.status) {
+                return { start: { status: true, row, col }, end };
+            }
 
-        setGameState({
-            start: newStart,
-            end: newEnd,
+            if (start.row === row && start.col === col) {
+                return { start: { ...INITIAL_TURN }, end };
+            }
+
+            if (!end.status) {
+                return { start, end: { status: true, row, col } };
+            }
+
+            if (end.row === row && end.col === col) {
+                return { start, end: { ...INITIAL_TURN } };
+            }
+
+            return { ...INITIAL_GAME_STATE };
         });
-    }
+    }, [setGameState, setCurrentWord]);
 
     // Renders grid and rerenders grid on any useState update
     return (
@@ -54,7 +53,7 @@ export const Board = () => {
                                 : "";
 
                         return (
-                            <div onClick={() => UpdateSelectionStatus(row, col)} key={nanoid()} data-row={row} data-col={col}
+                            <div onClick={() => UpdateSelectionStatus(row, col)} key={`${row}-${col}`} data-row={row} data-col={col}
                                  className={`tile ${board[row][col].bonus} ${selectedClass}`}>
                                 <button className="w-full h-full" disabled={!gameStart}>
                                     <span className={'tile-text'}>{board[row][col].letter}</span>

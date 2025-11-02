@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GameContext } from "../GameContext.jsx";
 import points from "../../_data/game.js";
 
-export const CalculateWordScore = (boardBonuses) => {
+export const useCalculateWordScore = (boardBonuses) => {
 
     const {currentWord} = useContext(GameContext);
 
@@ -16,9 +16,13 @@ export const CalculateWordScore = (boardBonuses) => {
             if (value.includes(letterArr[i]) && boardBonuses[i].slice(0, 2) === 'lx') {
                 score = score + (key * boardBonuses[i].slice(2));
             }
+            else {
+                score += key;
+            }
         }
     }
 
+    // Error Here that makes wordscore 0
     if (boardBonuses.some(bonus => bonus.slice(0, 2) !== 'wx')) {
         score = score * boardBonuses.filter(bonus => bonus.slice(0, 2) === 'wx').slice(2);
     }
