@@ -28,18 +28,19 @@ function GameForm() {
 
             turnsIntroduced.push(currentTurn);
 
-            setBoard(prev => {
-                return useUpdateGrid(prev, currentTurn, gameState, currentWord);
-            })
-
             // TODO: Check for bonus words created
-            // turnsIntroduced = turnsIntroduced.concat(turnsIntroduced, useSeekWordsCreated(currentTurn.selection));
+
+            // Calculate total score for the turn for player
+            let totalTurnScore = 0;
+            for (const turn of turnsIntroduced) {
+                totalTurnScore += turn.wordScore;
+            }
 
             // Update player in players array
             setPlayers(prev =>
                 prev.map(player =>
                     player.id === currentTurn.playerId
-                        ? { ...player, turns: [...player.turns, ...turnsIntroduced] }
+                        ? { ...player, score: totalTurnScore, turns: [...player.turns, ...turnsIntroduced] }
                         : player
                 )
             );
@@ -48,6 +49,10 @@ function GameForm() {
             setTurn(prev => {
                 return [...prev, ...turnsIntroduced];
             });
+
+            setBoard(prev => {
+                return useUpdateGrid(prev, currentTurn, gameState, currentWord);
+            })
 
             // Reset gameState and currentWord
             setGameState({

@@ -10,26 +10,37 @@ const calculateWordScore = (bonusList, currentWord) => {
     // Counts word score
     for (let i = 0; i < letterArr.length; i++) {
         for (const [key, value] of Object.entries(points) ) {
-            if (value.includes(letterArr[i]) && bonusList[i].slice(0, 2) === 'lx') {
-                score = score + (key * bonusList[i].slice(2));
+            if (value.includes(letterArr[i]) && bonusList[i].includes('lx')) {
+                score += (parseInt(key) * bonusList[i].slice(2));
+                console.log('inside if', score);
+            }
+            else if (value.includes(letterArr[i])) {
+                score += parseInt(key);
+                console.log('inside else', score);
             }
         }
     }
 
-    if (bonusList.some(bonus => bonus.slice(0, 2) !== 'wx')) {
-        score = score * bonusList.filter(bonus => bonus.slice(0, 2) === 'wx').slice(2);
-    }
+    bonusList.forEach((bonus) => {
+        if (bonus && bonus.startsWith("wx")) {
+            score *= bonus.slice(2);
+        }
+    });
+
+    // TODO: Check if new word adds 7 new letters to the board
 
     return score;
 }
 
 // Creates a turn object
 export const CreateTurn = (turns, players, gameState, currentWord) => {
+    // Mapping multipliers into row-col to multiplier pairs
+    const bonusAt = new Map(multipliers.map(([row, col, multiplier]) => [`${row},${col}`, multiplier]));
 
     // Function to create turn object
-    const currentTurn = {
+    let currentTurn = {
         turn: turns.length + 1,
-        playerId: players.filter(player => player.currentPlayer).id,
+        playerId: players.find(player => player.currentPlayer).id,
         selection: {
             direction: gameState.start.row === gameState.end.row ? "horizontal" : "vertical",
             indices: Array.from({length: currentWord.length}, (_, i) => {
@@ -44,28 +55,12 @@ export const CreateTurn = (turns, players, gameState, currentWord) => {
         },
         bonusList: [],
         word: currentWord,
-        wordScore: 0
+        wordScore: 0,
     }
 
-    currentTurn.bonusList = []
-
-    multipliers.filter(multiplier => {
-
-        if (currentTurn.selection.direction === "horizontal" &&
-            currentTurn.selection.row === multiplier[0] &&
-            currentTurn.selection.indices.includes(multiplier[1])) {
-
-            currentTurn.bonusList.push(multiplier[2]);
-        }
-        else if (currentTurn.selection.direction === "vertical" &&
-            currentTurn.selection.col === multiplier[1] &&
-            currentTurn.selection.indices.includes(multiplier[0])) {
-
-            currentTurn.bonusList.push(multiplier[2]);
-        }
-        else {
-            currentTurn.bonusList.push("");
-        }
+    currentTurn.bonusList = currentTurn.selection.indices.map(idx => {
+        const key = currentTurn.selection.direction ? `${currentTurn.selection.constant},${idx}` : `${idx},${currentTurn.selection.constant}`;
+        return bonusAt.get(key) ?? "";
     });
 
     currentTurn.wordScore = calculateWordScore(currentTurn.bonusList, currentWord);
