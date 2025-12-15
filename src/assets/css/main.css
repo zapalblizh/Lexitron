@@ -13,8 +13,36 @@
     --color-inherit: inherit;
     --color-white: #fff;
     --color-black: #000;
-    --bg-red: red;
 
+    /* Brand / Primary */
+    --color-scrabble-burgundy: #6b1f2b;     /* Box background */
+    --color-scrabble-burgundy-dark: #4e151e;
+    --color-scrabble-gold: #d6b25e;         /* Logo ring, accents */
+
+    /* Board Surfaces */
+    --color-board-cream: #f2f0ea;           /* Main board background */
+    --color-board-border: #1e1e1e;          /* Outer board border */
+    --color-board-grid: #cfcfcf;            /* Grid lines */
+
+    /* Text on Bonus Squares */
+    --bonus-text: #ffffff;
+
+    /* App Background */
+    --app-bg: #efe9dc;
+    --panel-bg: #ffffff;
+
+    /* Typography */
+    --text-primary: #1e1e1e;
+    --text-secondary: #555555;
+    --text-muted: #8a8a8a;
+
+    /* Interactive States */
+    --accent-hover: #7c2432;
+    --focus-outline: #d6b25e;
+
+    /* Shadows */
+    --shadow-soft: rgba(0, 0, 0, 0.12);
+    --shadow-medium: rgba(0, 0, 0, 0.18);
 }
 
 @layer components {
@@ -23,24 +51,24 @@
     }
 
     .tile {
-        height: clamp(1.125rem, -1.2188rem + 7.5vw, 3rem);
-        width: clamp(1.125rem, -1.2188rem + 7.5vw, 3rem);
-        @apply border flex justify-center items-center;
+        height: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem); /* 20px -> 30px */
+        width: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem); /* 20px -> 30px */
+        background: #e7ddcc;
+        color: #1b1b1b;
+        border: 1px solid #cbb07a;
+        @apply flex justify-center items-center ;
     }
 
     .lx2 {
-        @apply bg-orange-300;
+        background: #9fc6d3 !important;
     }
     .lx3 {
-        @apply bg-orange-500;
+        background: #4f8fa8 !important;
     }
     .wx2 {
-        @apply bg-blue-300;
+        background: #e2a1a6 !important;
     }
     .wx3 {
-        @apply bg-blue-500;
-    }
-    .center {
-        @apply bg-yellow-400;
+        background: #c94b4b !important;
     }
 }

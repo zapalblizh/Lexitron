@@ -41,7 +41,7 @@ export const Board = () => {
 
     // Renders grid and rerenders grid on any useState update
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center p-4">
             <div className="grid border w-fit" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
                 {board.map((rowArr, row) =>
                     rowArr.map((cell, col) => {

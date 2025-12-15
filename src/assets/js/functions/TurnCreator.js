@@ -39,8 +39,8 @@ export const CreateTurn = (turns, players, gameState, currentWord) => {
 
     // Function to create turn object
     let currentTurn = {
-        turn: turns.length + 1,
-        playerId: players.find(player => player.currentPlayer).id,
+        turnId: turns.length + 1,
+        playerId: players.find(player => player.currentPlayer)?.id,
         selection: {
             direction: gameState.start.row === gameState.end.row ? "horizontal" : "vertical",
             indices: Array.from({length: currentWord.length}, (_, i) => {
@@ -55,6 +55,7 @@ export const CreateTurn = (turns, players, gameState, currentWord) => {
         },
         bonusList: [],
         word: currentWord,
+        bonusWords: [],
         wordScore: 0,
     }
 

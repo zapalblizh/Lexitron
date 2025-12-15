@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { GameContext } from "../GameContext.jsx";
-import multipliers from "../../_data/multipliers.js"
 import { useVerifyWordPosition } from "../functions/VerifyWordPosition.js"
 import {useUpdateGrid} from "../functions/UpdateGrid.js";
 import {PlayerSelector} from "./PlayerSelector.jsx";
 import {CreateTurn} from "../functions/TurnCreator.js";
+import {TurnsHistory} from "./TurnsHistory.jsx";
 
 function GameForm() {
 
@@ -92,7 +92,9 @@ function GameForm() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex justify-center items-center gap-12">
+            <TurnsHistory />
+
             <form onSubmit={HandleSubmit} className="mt-4 flex items-center gap-2">
                 <div className="flex items-center justify-center gap-4">
                     <PlayerSelector />

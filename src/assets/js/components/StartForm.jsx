@@ -12,7 +12,10 @@ export const StartForm = () => {
                 setGameStart(true);
             }}>
                 <div className="flex flex-col justify-start gap-2 w-full text-start max-w-xs">
-                    <span className="text-2xl font-bold">Players</span>
+                    <div className="flex justify-between items-center">
+                        <span className="text-2xl font-bold">Players</span>
+                        <button className="mx-2 px-1 text-xs rounded-[2px] bg-[#386641] hover:bg-[#386641]/90 text-white">ADD</button>
+                    </div>
 
                     <div className="flex flex-col border-2 border-black divide-y-2 divide-black">
                         {players.map((player) => (
