@@ -7,15 +7,15 @@
     <title>Lexitron</title>
   </head>
 
-  <body class="bg-neutral-50">
-    <header class="p-3 sm:p-6" x-ref="header">
-        <nav class="rounded-md max-w-6xl bg-scrabble-burgundy text-white mx-auto px-6 py-3 flex items-center justify-between" aria-label="Global">
+  <body class="flex flex-col w-full bg-skin-400 text-ink font-sans">
+    <header class="p-0 sm:p-6" x-ref="header">
+        <nav class="max-w-7xl rounded-none sm:rounded-md bg-burgundy text-cursor mx-auto px-6 py-3 flex items-center justify-between" aria-label="Global">
             <span>Lexitron</span>
             <span>Made by AZ</span>
         </nav>
     </header>
 
-    <main id="lexitron-game" class="container grow">
+    <main id="lexitron-game" class="mx-auto flex w-full max-w-7xl flex-auto flex-col justify-stretch px-6 py-8 sm:py-12 lg:py-24 lg:px-8">
         <script type="module" src="/src/assets/js/index.jsx"></script>
     </main>
   </body>

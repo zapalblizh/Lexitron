@@ -1,0 +1,21 @@
+@layer components {
+    .tile {
+        height: clamp(1.25rem, -0.3125rem + 5vw, 2.5rem); /* 20px -> 40px */
+        width: clamp(1.25rem, -0.3125rem + 5vw, 2.5rem); /* 20px -> 40px */
+        color: #1b1b1b;
+        @apply flex justify-center items-center bg-skin-500;
+    }
+
+    .lx2 {
+        background: #9fc6d3 !important; /* Letter Bonus x2 */
+    }
+    .lx3 {
+        background: #4f8fa8 !important; /* Letter Bonus x3 */
+    }
+    .wx2 {
+        background: #e2a1a6 !important; /* Word Bonus x2 */
+    }
+    .wx3 {
+        background: #c94b4b !important; /* Word Bonus x3 */
+    }
+}

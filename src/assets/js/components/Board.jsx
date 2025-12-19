@@ -41,8 +41,8 @@ export const Board = () => {
 
     // Renders grid and rerenders grid on any useState update
     return (
-        <div className="flex justify-center items-center p-4">
-            <div className="grid border w-fit" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
+        <div className="flex justify-center items-center">
+            <div className="grid border border-skin-600  w-fit" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
                 {board.map((rowArr, row) =>
                     rowArr.map((cell, col) => {
                         const isStart = gameState.start.row === row && gameState.start.col === col;
@@ -54,7 +54,7 @@ export const Board = () => {
 
                         return (
                             <div onClick={() => UpdateSelectionStatus(row, col)} key={`${row}-${col}`} data-row={row} data-col={col}
-                                 className={`tile ${board[row][col].bonus} ${selectedClass}`}>
+                                 className={`tile border-board-lines ${board[row][col].bonus || ""} ${selectedClass}`}>
                                 <button className="w-full h-full" disabled={!gameStart}>
                                     <span className={'tile-text'}>{board[row][col].letter}</span>
                                 </button>

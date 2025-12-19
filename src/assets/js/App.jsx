@@ -10,10 +10,8 @@ function App() {
     const {gameStart} = useContext(GameContext);
 
     return (
-        <div className="w-full flex flex-col items-center">
-            <div className="p-8 border-black">
-                <Board />
-            </div>
+        <div className="w-full flex flex-col items-center gap-4">
+            <Board />
             {gameStart ? <GameForm /> : <StartForm />}
             <ErrorComponent />
         </div>

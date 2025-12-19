@@ -1,74 +1,41 @@
 @import "tailwindcss";
+@import "tailwindcss-safe-area";
+
+/* Base */
+@import "./base/reset.css";
+@import "./base/base.css";
+@import "./base/typography.css";
+@import "./base/forms.css";
+
+/* Components */
+@import "./components/buttons.css";
+@import "./components/board.css";
 
 @theme {
-    --container-copy-xs: 25ch;
-    --container-copy-sm: 45ch;
-    --container-copy-md: 55ch;
-    --container-copy-lg: 65ch;
-    --container-copy-xl: 75ch;
-    --container-copy-2xl: 85ch;
+    --font-sans: "GeneralSans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 
-    --color-transparent: transparent;
-    --color-current: currentColor;
-    --color-inherit: inherit;
-    --color-white: #fff;
-    --color-black: #000;
+    /* Breakpoints */
+    --breakpoint-xxs: 360px;
+    --breakpoint-xs: 490px;
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-xxl: 1536px;
 
-    /* Brand / Primary */
-    --color-scrabble-burgundy: #6b1f2b;     /* Box background */
-    --color-scrabble-burgundy-dark: #4e151e;
-    --color-scrabble-gold: #d6b25e;         /* Logo ring, accents */
+    --color-cursor: #fff;
+    --color-terminal: #000;
 
-    /* Board Surfaces */
-    --color-board-cream: #f2f0ea;           /* Main board background */
-    --color-board-border: #1e1e1e;          /* Outer board border */
-    --color-board-grid: #cfcfcf;            /* Grid lines */
+    --color-burgundy: #6b1f2b; /* Header, Footer, and Buttons */
+    --color-burgundy-dark: #4e151e; /* Hover button State + Other uses possibly */
 
-    /* Text on Bonus Squares */
-    --bonus-text: #ffffff;
+    --color-skin-400: #efe9dc; /* App Background */
+    --color-skin-500: #e7ddcc; /* Tile Background */
+    --color-skin-600: #cbb07a; /* Border Color */
+    --color-board-lines: #cfcfcf; /* Grid lines */
+    --color-ink: #2a2321; /* Text Color */
+    --color-btn-disabled: #6B5257;
 
-    /* App Background */
-    --app-bg: #efe9dc;
-    --panel-bg: #ffffff;
-
-    /* Typography */
-    --text-primary: #1e1e1e;
-    --text-secondary: #555555;
-    --text-muted: #8a8a8a;
-
-    /* Interactive States */
-    --accent-hover: #7c2432;
-    --focus-outline: #d6b25e;
-
-    /* Shadows */
-    --shadow-soft: rgba(0, 0, 0, 0.12);
-    --shadow-medium: rgba(0, 0, 0, 0.18);
-}
-
-@layer components {
-    .container {
-        @apply max-w-(--breakpoint-2xl) mx-auto;
-    }
-
-    .tile {
-        height: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem); /* 20px -> 30px */
-        width: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem); /* 20px -> 30px */
-        background: #e7ddcc;
-        color: #1b1b1b;
-        border: 1px solid #cbb07a;
-        @apply flex justify-center items-center ;
-    }
-
-    .lx2 {
-        background: #9fc6d3 !important;
-    }
-    .lx3 {
-        background: #4f8fa8 !important;
-    }
-    .wx2 {
-        background: #e2a1a6 !important;
-    }
-    .wx3 {
-        background: #c94b4b !important;
-    }
+    --focus-outline: #d6b25e; /* Maybe use for fields on click on them -- Interactive */
 }
