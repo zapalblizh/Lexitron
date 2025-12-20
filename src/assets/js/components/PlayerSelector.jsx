@@ -18,7 +18,7 @@ export const PlayerSelector = () => {
             <button key={player.id}
                     onClick={() => handlePlayerSelect(player.id)}
                     disabled={player.currentPlayer}
-                    className="rounded px-4 py-2 bg-green-500 disabled:bg-green-300 text-[#001A0A]">
+                    className="btn btn--primary">
                 <span>{player.name}</span>
             </button>
         ))

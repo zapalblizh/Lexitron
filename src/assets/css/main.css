@@ -11,6 +11,9 @@
 @import "./components/buttons.css";
 @import "./components/board.css";
 
+/* Utilities */
+@import "./utilities/utility.css";
+
 @theme {
     --font-sans: "GeneralSans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
