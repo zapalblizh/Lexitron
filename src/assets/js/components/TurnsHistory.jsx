@@ -19,7 +19,7 @@ export const TurnsHistory = () => {
     const {turns, players} = useContext(GameContext);
 
     return (
-        <div className="p-4 border-2 rounded-2xl border-black">
+        <div className="flex-1 p-4 bg-skin-600/60 rounded-sm">
             <div className="flex flex-col gap-2">
                 {turns.map((turn) => {
                     const turnData = getTurnData(turn, players);

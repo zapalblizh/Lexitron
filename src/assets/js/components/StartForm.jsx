@@ -26,7 +26,7 @@ export const StartForm = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center w-full mx-auto max-w-sm px-4">
+        <div className="flex flex-col justify-center w-full max-w-sm">
             <div className="flex justify-between items-center">
                 <span className="text-2xl font-bold">Players</span>
                 <button type="button" onClick={() => AddPlayer()} className="btn btn--xs">ADD</button>

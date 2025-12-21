@@ -1,9 +1,9 @@
 @layer components {
     .tile {
-        height: clamp(1.25rem, -0.3125rem + 5vw, 2.5rem); /* 20px -> 40px */
-        width: clamp(1.25rem, -0.3125rem + 5vw, 2.5rem); /* 20px -> 40px */
+        height: clamp(1.25rem, 0.0781rem + 3.75vw, 3.125rem); /* Max viewport 1300px 20px -> 50px */
+        width: clamp(1.25rem, 0.0781rem + 3.75vw, 3.125rem); /* Max viewport 1300px 20px -> 50px */
         color: #1b1b1b;
-        @apply flex justify-center items-center bg-skin-500;
+        @apply flex justify-center items-center border border-skin-600 bg-skin-500;
     }
 
     .lx2 {
