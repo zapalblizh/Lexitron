@@ -91,9 +91,11 @@ function GameForm() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center gap-12">
-            <form onSubmit={HandleSubmit} className="mt-4 flex items-center gap-2">
-                <div className="flex items-center justify-center gap-4">
+        <div className="flex flex-col gap-2">
+            <span className="text-2xl font-bold">Play a Word</span>
+
+            <form onSubmit={HandleSubmit} className="w-full mx-auto flex flex-col justify-center items-center gap-4 p-4 bg-cursor border-skin-600 border-2 rounded-xl">
+                <div className="flex flex-wrap items-center justify-center gap-4">
                     <PlayerSelector />
                 </div>
                 <input
@@ -104,7 +106,7 @@ function GameForm() {
                     className="border rounded px-3 py-2"
                 />
                 <button type="submit"
-                        className="px-3 py-2 rounded bg-blue-600 text-white">
+                        className="btn-submit">
                     <span>Submit</span>
                 </button>
             </form>

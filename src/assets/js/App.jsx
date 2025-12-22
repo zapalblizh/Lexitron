@@ -20,7 +20,7 @@ function App() {
                     {/*<Leaderboard/>*/}
                 </div>
 
-                <div className="flex flex-col justify-center lg:justify-start py-8 col-span-1 lg:col-span-2">
+                <div className="flex flex-col justify-center lg:justify-start gap-4 py-8 col-span-1 lg:col-span-2">
                     {gameStart ? <GameForm /> : <StartForm />}
 
                     <TurnsHistory />

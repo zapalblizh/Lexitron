@@ -14,13 +14,15 @@ export const PlayerSelector = () => {
     }
 
     return (
-        players.map(player => (
-            <button key={player.id}
-                    onClick={() => handlePlayerSelect(player.id)}
-                    disabled={player.currentPlayer}
-                    className="btn btn--primary">
-                <span>{player.name}</span>
-            </button>
-        ))
+        <div className="flex flex-wrap justify-center gap-2 px-8">
+            {players.map(player => (
+                <button key={player.id}
+                        onClick={() => handlePlayerSelect(player.id)}
+                        disabled={player.currentPlayer}
+                        className="btn btn--primary">
+                    <span>{player.name}</span>
+                </button>
+            ))}
+        </div>
     )
 }

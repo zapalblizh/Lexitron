@@ -20,12 +20,12 @@ export const PlayerTile = ({Player}) => {
 
     return (
         <div key={Player.id} className="w-full">
-            <div className="flex w-full items-center gap-4">
+            <div className="flex w-full justify-center items-center gap-4">
                 <input
                     type="text"
                     value={Player.name}
                     onChange={(e) => HandleNameChange({ Player, name: e.target.value })}
-                    className="border rounded px-2 py-1 w-full min-w-0"
+                    className="border rounded px-3 py-2"
                     placeholder={`Your Player Name`}
                 />
 
@@ -34,7 +34,7 @@ export const PlayerTile = ({Player}) => {
                     disabled={players.length === 2}
                     onClick={() => RemovePlayer(Player)}
                     className="btn btn--xs whitespace-nowrap flex-shrink-0">
-                    DELETE
+                    Delete
                 </button>
             </div>
         </div>

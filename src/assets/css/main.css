@@ -33,6 +33,8 @@
     --color-burgundy: #6b1f2b; /* Header, Footer, and Buttons */
     --color-burgundy-dark: #4e151e; /* Hover button State + Other uses possibly */
 
+    --color-board-blue-dark: #467E94; /* Used as tile color and as submission button background */
+
     --color-skin-400: #efe9dc; /* App Background */
     --color-skin-500: #e7ddcc; /* Tile Background */
     --color-skin-600: #cbb07a; /* Border Color */
