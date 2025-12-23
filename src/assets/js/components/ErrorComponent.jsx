@@ -28,8 +28,8 @@ export const ErrorComponent = () => {
     }, [errorMessage, setErrorMessage]);
 
     return (
-        <div className={`transition-opacity duration-500 opacity-0 flex items-center justify-center p-4 text-red-400 
-            ${isVisible ? 'opacity-100' : 'opacity-0'}`
+        <div className={`transition-opacity duration-500 opacity-0 flex items-center justify-center p-2 text-red-400
+            ${isVisible ? 'opacity-100' : 'opacity-0 hidden'}`
         }>
             <span>{errorMessage}</span>
         </div>

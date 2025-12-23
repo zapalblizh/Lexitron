@@ -25,7 +25,7 @@ export const PlayerTile = ({Player}) => {
                     type="text"
                     value={Player.name}
                     onChange={(e) => HandleNameChange({ Player, name: e.target.value })}
-                    className="border rounded px-3 py-2"
+                    className="border bg-cursor rounded px-3 py-2"
                     placeholder={`Your Player Name`}
                 />
 

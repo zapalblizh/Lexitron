@@ -4,6 +4,7 @@ import { useVerifyWordPosition } from "../functions/VerifyWordPosition.js"
 import {useUpdateGrid} from "../functions/UpdateGrid.js";
 import {PlayerSelector} from "./PlayerSelector.jsx";
 import {CreateTurn} from "../functions/TurnCreator.js";
+import {ErrorComponent} from "./ErrorComponent.jsx";
 
 function GameForm() {
 
@@ -105,6 +106,8 @@ function GameForm() {
                     placeholder="Insert your word here"
                     className="border rounded px-3 py-2"
                 />
+                <ErrorComponent />
+
                 <button type="submit"
                         className="btn-submit">
                     <span>Submit</span>

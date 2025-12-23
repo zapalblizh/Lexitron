@@ -2,9 +2,10 @@ import {PlayerTile} from "./PlayerTile.jsx";
 import {useContext} from "react";
 import {GameContext} from "../GameContext.jsx";
 import {nanoid} from "nanoid";
+import {ErrorComponent} from "./ErrorComponent.jsx";
 
 export const StartForm = () => {
-    const {players, setGameStart, setErrorMessage, setPlayers} = useContext(GameContext);
+    const {players, setGameStart, errorMessage, setErrorMessage, setPlayers} = useContext(GameContext);
 
     const AddPlayer = () => {
         if (players.length === 4) {
@@ -32,13 +33,17 @@ export const StartForm = () => {
                 <button type="button" onClick={() => AddPlayer()} className="btn btn--xs">Add</button>
             </div>
 
-            <form className="flex flex-col items-center gap-4 pt-2 px-2 sm:p-4 w-full mx-auto justify-center bg-cursor border-skin-600 border-2 rounded-xl" onSubmit={(event) => {
+            <form className="flex flex-col items-center gap-4 pt-2 px-2 sm:p-4 w-full mx-auto justify-center bg-cursor border-2 border-ink rounded-xl" onSubmit={(event) => {
                 event.preventDefault();
                 setGameStart(true);
             }}>
                 {players.map((player) => (
                     <PlayerTile key={player.id} Player={player} />
                 ))}
+
+                <div className={errorMessage ? "block" : "hidden"}>
+                    <ErrorComponent />
+                </div>
 
                 <button type="submit" className="btn-submit">
                     Start Game
