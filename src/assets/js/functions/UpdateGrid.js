@@ -2,7 +2,6 @@ export const useUpdateGrid = (board, currentTurn, gameState, currentWord) => {
 
     const letters = currentWord.toUpperCase().split("");
     if (letters.length === 0) return;
-
     const next = board.map(row => row.slice());
 
     currentTurn.selection.indices.forEach(i => {

@@ -5,10 +5,11 @@ import {useUpdateGrid} from "../functions/UpdateGrid.js";
 import {PlayerSelector} from "./PlayerSelector.jsx";
 import {CreateTurn} from "../functions/TurnCreator.js";
 import {ErrorComponent} from "./ErrorComponent.jsx";
+import {WordExistsInDict} from "../functions/WordExistsInDict.js";
 
 function GameForm() {
 
-    const {turns, setTurn, wordDict, errorMessage, setErrorMessage, players, setPlayers, gameState, setGameState, currentWord, setCurrentWord, board, setBoard, SIZE_OF_GRID} = useContext(GameContext);
+    const {turns, currentTurn, setTurn, wordDict, errorMessage, setErrorMessage, players, setPlayers, gameState, setGameState, currentWord, setCurrentWord, board, setBoard, SIZE_OF_GRID} = useContext(GameContext);
 
     // Handles Submission of a Word from Form
     function HandleSubmit(e) {
@@ -16,15 +17,19 @@ function GameForm() {
 
         const uppercaseWord = currentWord.toUpperCase();
 
+        let currentTurn = {};
+
+        if (gameState.start.status && gameState.end.status)
+            currentTurn = CreateTurn(turns, players, gameState, currentWord);
+        else setErrorMessage('Please select a start and end position for your word.');
+
         // Returns alerts and true when passes through all checks
-        const isValid = useVerifyWordPosition(board, gameState, currentWord, players, SIZE_OF_GRID);
+        const positionValid = useVerifyWordPosition(board, gameState, currentWord, players, SIZE_OF_GRID);
 
-        if (isValid && wordDict.has(uppercaseWord)) {
+        const validWord = positionValid && WordExistsInDict(board, wordDict, currentTurn, gameState, currentWord, SIZE_OF_GRID);
 
+        if (validWord) {
             let turnsIntroduced = [];
-
-            // Insert here magic function
-            const currentTurn = CreateTurn(turns, players, gameState, currentWord);
 
             turnsIntroduced.push(currentTurn);
 
@@ -70,7 +75,7 @@ function GameForm() {
             setCurrentWord("");
         }
         else {
-            if (!wordDict.has(uppercaseWord)) {
+            if (!validWord) {
                 setErrorMessage('Please enter a word that is included in the English dictionary.')
             }
 

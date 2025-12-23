@@ -12,11 +12,11 @@ const calculateWordScore = (bonusList, currentWord) => {
         for (const [key, value] of Object.entries(points) ) {
             if (value.includes(letterArr[i]) && bonusList[i].includes('lx')) {
                 score += (parseInt(key) * bonusList[i].slice(2));
-                console.log('inside if', score);
+                // console.log('inside if', score);
             }
             else if (value.includes(letterArr[i])) {
                 score += parseInt(key);
-                console.log('inside else', score);
+                // console.log('inside else', score);
             }
         }
     }
