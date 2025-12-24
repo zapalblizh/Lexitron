@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GameContext } from "../GameContext.jsx";
-import { useVerifyWordPosition } from "../functions/VerifyWordPosition.js"
+import { VerifyWord } from "../functions/VerifyWord.js"
 import {useUpdateGrid} from "../functions/UpdateGrid.js";
 import {PlayerSelector} from "./PlayerSelector.jsx";
 import {CreateTurn} from "../functions/TurnCreator.js";
@@ -9,26 +9,23 @@ import {WordExistsInDict} from "../functions/WordExistsInDict.js";
 
 function GameForm() {
 
-    const {turns, currentTurn, setTurn, wordDict, errorMessage, setErrorMessage, players, setPlayers, gameState, setGameState, currentWord, setCurrentWord, board, setBoard, SIZE_OF_GRID} = useContext(GameContext);
+    const {turns, currentTurn, setTurn, wordDict, setErrorMessage, players, setPlayers, gameState, setGameState, currentWord, setCurrentWord, board, setBoard, SIZE_OF_GRID} = useContext(GameContext);
 
     // Handles Submission of a Word from Form
     function HandleSubmit(e) {
         e.preventDefault();
 
-        const uppercaseWord = currentWord.toUpperCase();
-
         let currentTurn = {};
 
-        if (gameState.start.status && gameState.end.status)
+        if (!(gameState.start.status && gameState.end.status))
             currentTurn = CreateTurn(turns, players, gameState, currentWord);
         else setErrorMessage('Please select a start and end position for your word.');
 
         // Returns alerts and true when passes through all checks
-        const positionValid = useVerifyWordPosition(board, gameState, currentWord, players, SIZE_OF_GRID);
+        const validWord = VerifyWord(board, gameState, currentWord, players, SIZE_OF_GRID);
 
-        const validWord = positionValid && WordExistsInDict(board, wordDict, currentTurn, gameState, currentWord, SIZE_OF_GRID);
-
-        if (validWord) {
+        // TODO: Update after changes to word verification
+        if (positionValid.valid && wordExistsInDict) {
             let turnsIntroduced = [];
 
             turnsIntroduced.push(currentTurn);
@@ -75,8 +72,9 @@ function GameForm() {
             setCurrentWord("");
         }
         else {
+            setErrorMessage(positionValid.message);
             if (!validWord) {
-                setErrorMessage('Please enter a word that is included in the English dictionary.')
+                setErrorMessage()
             }
 
             // Reset gameState and currentWord
