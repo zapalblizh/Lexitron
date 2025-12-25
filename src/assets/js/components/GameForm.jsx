@@ -5,7 +5,6 @@ import {useUpdateGrid} from "../functions/UpdateGrid.js";
 import {PlayerSelector} from "./PlayerSelector.jsx";
 import {CreateTurn} from "../functions/TurnCreator.js";
 import {ErrorComponent} from "./ErrorComponent.jsx";
-import {WordExistsInDict} from "../functions/WordExistsInDict.js";
 
 function GameForm() {
 
@@ -15,19 +14,12 @@ function GameForm() {
     function HandleSubmit(e) {
         e.preventDefault();
 
-        let currentTurn = {};
-
-        if (!(gameState.start.status && gameState.end.status))
-            currentTurn = CreateTurn(turns, players, gameState, currentWord);
-        else setErrorMessage('Please select a start and end position for your word.');
-
         // Returns alerts and true when passes through all checks
-        const validWord = VerifyWord(board, gameState, currentWord, players, SIZE_OF_GRID);
+        const validWord = VerifyWord(board, gameState, currentWord, players, SIZE_OF_GRID, wordDict);
 
-        // TODO: Update after changes to word verification
-        if (positionValid.valid && wordExistsInDict) {
+        if (validWord.valid) {
             let turnsIntroduced = [];
-
+            let currentTurn = CreateTurn(turns, players, gameState, currentWord);
             turnsIntroduced.push(currentTurn);
 
             // TODO: Check for bonus words created
@@ -72,10 +64,7 @@ function GameForm() {
             setCurrentWord("");
         }
         else {
-            setErrorMessage(positionValid.message);
-            if (!validWord) {
-                setErrorMessage()
-            }
+            setErrorMessage(validWord.message);
 
             // Reset gameState and currentWord
             setGameState({

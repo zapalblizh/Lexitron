@@ -37,6 +37,8 @@ export const CreateTurn = (turns, players, gameState, currentWord) => {
     // Mapping multipliers into row-col to multiplier pairs
     const bonusAt = new Map(multipliers.map(([row, col, multiplier]) => [`${row},${col}`, multiplier]));
 
+    // TODO: Check bonusWords thing and remove it
+    // TODO: Verify if bonusList is done well, and possibly modify to be better
     // Function to create turn object
     let currentTurn = {
         turnId: turns.length + 1,

@@ -1,4 +1,4 @@
-export const VerifyWord = (board, gameState, currentWord, players, gridSize) => {
+export const VerifyWord = (board, gameState, currentWord, players, gridSize, wordDict) => {
     // Checks if word is empty
     if (currentWord.length === 0) {
         return { valid: false, message: 'Enter a word to submit.'};
@@ -32,61 +32,67 @@ export const VerifyWord = (board, gameState, currentWord, players, gridSize) => 
 
     // Gets direction of placement
     const direction = gameState.start.row === gameState.end.row ? "horizontal" : "vertical"
+    const arrayRange = (start, stop, step) =>
+        Array.from(
+            { length: (stop - start) / step + 1 },
+            (value, index) => start + index * step
+        );
+
+    let wordRange = direction === "horizontal"
+        ? arrayRange(gameState.start.col, gameState.end.col + 1, 1)
+        : arrayRange(gameState.start.row, gameState.end.row + 1, 1);
 
     // Checks if it is the first turn, and so checks if center tile is selected
     if (players.every(player => player.score === 0)) {
-        const arrayRange = (start, stop, step) =>
-            Array.from(
-                { length: (stop - start) / step + 1 },
-                (value, index) => start + index * step
-            );
-
-        let range = [];
-        if (direction === "horizontal")
-            range = arrayRange(gameState.start.col, gameState.end.col + 1, 1);
-        else if (direction === "vertical")
-            range = arrayRange(gameState.start.row, gameState.end.row + 1, 1);
-
-        if (!(range.includes(Math.floor(gridSize / 2)))) {
+        if (!(wordRange.includes(Math.floor(gridSize / 2)))) {
             return { valid: false, message: 'Include the center tile in your word placement for the first turn.'};
         }
     }
 
-    // TODO: Check letters outside word range to avoid issues in the future
-
-    // TODO: Update code to more effectively check for conflicts in word placement
-    // Check tiles of placement for word
-    // If start and end equal in row position, then horizontal, otherwise vertical
-    const isHorizontal = gameState.start.row === gameState.end.row;
-    const wordStart = isHorizontal ? Math.min(gameState.start.col, gameState.end.col) : Math.min(gameState.start.row, gameState.end.row);
-
-    let connectionFound = false;
-    let conflictFound = false;
-    const letters = currentWord.toUpperCase().split("");
-
-    for (let i = 0; i < currentWord.length; i++) {
-        let axis = wordStart + i;
-        const currentRow = isHorizontal ? gameState.start.row : axis;
-        const currentCol = isHorizontal ? axis : gameState.start.col;
-
-        const boardLetter = board[currentRow][currentCol].letter;
-        const newLetter = letters[i];
-
-        if (boardLetter !== '') {
-            if (boardLetter === newLetter) {
-                if (!connectionFound)
-                    connectionFound = true;
-            }
-            else {
-                conflictFound = true;
-                break;
+    // Checks for conflicts with existing letters and outside range to make sure word is valid in that position
+    let inc = 0;
+    if (direction === "horizontal") {
+        // Conflict verifier
+        for (let key in wordRange) {
+            let letter = board[gameState.start.row][key].letter;
+            if (letter !== '' && letter !== currentWord[inc])
+                return { valid: false, message: 'Select a word that fits in the selected tiles and does not replace existing letters.'};
+            inc++;
+        }
+        // Checks outside selection for possible conflicts
+        for (let key in [gameState.start.col - 1, gameState.end.col - 1]) {
+            switch (key) {
+                case (0): break;
+                case (14): break;
+                default:
+                    if (board[gameState.start.row][key].letter !== '')
+                        return { valid: false, message: 'Your word touches another letter in the grid that is outside your selection. If this letter is part of your word, extend your selection. Otherwise, choose a different position where to place your word.'};
             }
         }
-
+    }
+    else if (direction === "vertical") {
+        // Conflict verifier
+        for (let key in wordRange) {
+            let letter = board[key][gameState.start.col].letter;
+            if (letter !== '' && letter !== currentWord[inc])
+                return { valid: false, message: 'Select a word that fits in the selected tiles and does not replace existing letters.'};
+            inc++;
+        }
+        // Checks outside selection for possible conflicts
+        for (let key in [gameState.start.row - 1, gameState.end.row - 1]) {
+            switch (key) {
+                case (0): break;
+                case (14): break;
+                default:
+                    if (board[key][gameState.start.col].letter !== '')
+                        return { valid: false, message: 'Your word touches another letter in the grid that is outside your selection. If this letter is part of your word, extend your selection. Otherwise, choose a different position where to place your word.'};
+            }
+        }
     }
 
-    if (conflictFound) {
-        return { valid: false, message: 'Please select a word that fits in the selected tiles and does not replace existing letters.'};
+    // Check if word is in dictionary
+    if (!wordDict.has(currentWord.toUpperCase())) {
+        return { valid: false, message: 'Please enter a word that is included in the English dictionary.'};
     }
 
     return {valid: true, message: ''};
