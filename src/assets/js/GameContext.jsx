@@ -17,11 +17,13 @@ export const GameProvider = ({children}) => {
             Array.from({ length: SIZE_OF_GRID }, () => ({
                 letter: '',
                 bonus: null,
+                bonusAvailable: false
             }))
         );
 
         for (let i = 0; i < multipliers.length; i++) {
             initialBoard[multipliers[i][0]][multipliers[i][1]].bonus = multipliers[i][2];
+            initialBoard[multipliers[i][0]][multipliers[i][1]].bonusAvailable = true;
         }
 
         return initialBoard;

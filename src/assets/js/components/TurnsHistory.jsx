@@ -4,13 +4,13 @@ import {GameContext} from "../GameContext.jsx";
 const getTurnData = (turn, players) => {
     const turnId = turn.turnId;
     const playerName = players.find(player => player.id === turn.playerId)?.name;
-    const words = [turn.word, ...(turn.bonusWords || [])].join(", ");
+    // const words = [turn.word, ...(turn.bonusWords || [])].join(", ");
     const score = turn.wordScore
 
     return {
         turnId,
         playerName,
-        words,
+        // words,
         score,
     };
 }
@@ -28,7 +28,7 @@ export const TurnsHistory = () => {
                         <div key={turnData.turnId} className="grid grid-cols-4 gap-2 p-2">
                             <span>{turnData.turnId}</span>
                             <span className="text-xl font-bold">{turnData.playerName}</span>
-                            <span className="text-lg">{turnData.words}</span>
+                            {/*<span className="text-lg">{turnData.words}</span>*/}
                             <span className="text-lg">{turnData.score}</span>
                         </div>
                     )

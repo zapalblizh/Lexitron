@@ -8,21 +8,21 @@ const calculateWordScore = (bonusList, currentWord) => {
     const letterArr = currentWord.toUpperCase().split("");
 
     // Counts word score
-    for (let i = 0; i < letterArr.length; i++) {
+    for (let i = 0; i < currentWord.length; i++) {
         for (const [key, value] of Object.entries(points) ) {
-            if (value.includes(letterArr[i]) && bonusList[i].includes('lx')) {
-                score += (parseInt(key) * bonusList[i].slice(2));
-                // console.log('inside if', score);
+            if (bonusList[i].available &&
+                (value.includes(letterArr[i])
+                    && bonusList[i].multiplier.includes('lx'))) {
+                score += (parseInt(key) * bonusList[i].multiplier.slice(2));
             }
             else if (value.includes(letterArr[i])) {
                 score += parseInt(key);
-                // console.log('inside else', score);
             }
         }
     }
 
     bonusList.forEach((bonus) => {
-        if (bonus && bonus.startsWith("wx")) {
+        if (bonus.available && bonus.multiplier.startsWith("wx")) {
             score *= bonus.slice(2);
         }
     });
@@ -33,11 +33,10 @@ const calculateWordScore = (bonusList, currentWord) => {
 }
 
 // Creates a turn object
-export const CreateTurn = (turns, players, gameState, currentWord) => {
+export const CreateTurn = (board, turns, players, gameState, currentWord) => {
     // Mapping multipliers into row-col to multiplier pairs
-    const bonusAt = new Map(multipliers.map(([row, col, multiplier]) => [`${row},${col}`, multiplier]));
+    const bonusAt = new Map(multipliers.map(([row, col, multiplier]) => [`${row},${col}`, multiplier ]));
 
-    // TODO: Check bonusWords thing and remove it
     // TODO: Verify if bonusList is done well, and possibly modify to be better
     // Function to create turn object
     let currentTurn = {
@@ -57,14 +56,27 @@ export const CreateTurn = (turns, players, gameState, currentWord) => {
         },
         bonusList: [],
         word: currentWord,
-        bonusWords: [],
         wordScore: 0,
     }
 
     currentTurn.bonusList = currentTurn.selection.indices.map(idx => {
-        const key = currentTurn.selection.direction ? `${currentTurn.selection.constant},${idx}` : `${idx},${currentTurn.selection.constant}`;
-        return bonusAt.get(key) ?? "";
+        const key = currentTurn.selection.direction === "horizontal"
+            ? `${currentTurn.selection.constant},${idx}`
+            : `${idx},${currentTurn.selection.constant}`;
+
+        const bonusVal = bonusAt.get(key); // may be undefined or a string like "lx2"
+        const multiplier = typeof bonusVal === "string" ? bonusVal : "none";
+
+        const available = currentTurn.selection.direction === "horizontal"
+            ? board[currentTurn.selection.constant][idx].bonusAvailable
+            : board[idx][currentTurn.selection.constant].bonusAvailable;
+
+        return {
+            multiplier,
+            available
+        };
     });
+
 
     currentTurn.wordScore = calculateWordScore(currentTurn.bonusList, currentWord);
 

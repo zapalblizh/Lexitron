@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { GameContext } from "../GameContext.jsx";
 import { VerifyWord } from "../functions/VerifyWord.js"
-import {useUpdateGrid} from "../functions/UpdateGrid.js";
+import {UpdateGrid} from "../functions/UpdateGrid.js";
 import {PlayerSelector} from "./PlayerSelector.jsx";
 import {CreateTurn} from "../functions/TurnCreator.js";
 import {ErrorComponent} from "./ErrorComponent.jsx";
 
 function GameForm() {
 
-    const {turns, currentTurn, setTurn, wordDict, setErrorMessage, players, setPlayers, gameState, setGameState, currentWord, setCurrentWord, board, setBoard, SIZE_OF_GRID} = useContext(GameContext);
+    const {turns, setTurn, wordDict, setErrorMessage, players, setPlayers, gameState, setGameState, currentWord, setCurrentWord, board, setBoard, SIZE_OF_GRID} = useContext(GameContext);
 
     // Handles Submission of a Word from Form
     function HandleSubmit(e) {
@@ -19,7 +19,7 @@ function GameForm() {
 
         if (validWord.valid) {
             let turnsIntroduced = [];
-            let currentTurn = CreateTurn(turns, players, gameState, currentWord);
+            let currentTurn = CreateTurn(board, turns, players, gameState, currentWord);
             turnsIntroduced.push(currentTurn);
 
             // TODO: Check for bonus words created
@@ -45,7 +45,7 @@ function GameForm() {
             });
 
             setBoard(prev => {
-                return useUpdateGrid(prev, currentTurn, gameState, currentWord);
+                return UpdateGrid(prev, currentTurn, gameState, currentWord);
             })
 
             // Reset gameState and currentWord
