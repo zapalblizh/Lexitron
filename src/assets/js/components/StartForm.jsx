@@ -33,7 +33,7 @@ export const StartForm = () => {
                 <button type="button" onClick={() => AddPlayer()} className="btn btn--xs">Add</button>
             </div>
 
-            <form className="flex flex-col items-center gap-4 pt-2 px-2 sm:p-4 w-full mx-auto justify-center bg-cursor border-2 border-ink rounded-xl" onSubmit={(event) => {
+            <form className="max-w-96 flex flex-col items-center gap-4 px-6 py-3 w-full mx-auto justify-center bg-cursor border-2 border-ink rounded-xl" onSubmit={(event) => {
                 event.preventDefault();
                 setGameStart(true);
             }}>

@@ -6,7 +6,7 @@ import {PlayerSelector} from "./PlayerSelector.jsx";
 import {CreateTurn} from "../functions/TurnCreator.js";
 import {ErrorComponent} from "./ErrorComponent.jsx";
 
-function GameForm() {
+export const GameForm = () => {
 
     const {turns, setTurn, wordDict, setErrorMessage, players, setPlayers, gameState, setGameState, currentWord, setCurrentWord, board, setBoard, SIZE_OF_GRID} = useContext(GameContext);
 
@@ -87,7 +87,7 @@ function GameForm() {
         <div className="flex flex-col gap-2">
             <span className="text-2xl font-bold">Play a Word</span>
 
-            <form onSubmit={HandleSubmit} className="w-full mx-auto flex flex-col justify-center items-center gap-4 p-4 bg-cursor border-skin-600 border-2 rounded-xl">
+            <form onSubmit={HandleSubmit} className="w-full mx-auto flex flex-col justify-center items-center gap-4 p-4 bg-cursor border-2 rounded-xl">
                 <div className="flex flex-wrap items-center justify-center gap-4">
                     <PlayerSelector />
                 </div>
@@ -108,5 +108,3 @@ function GameForm() {
         </div>
     )
 }
-
-export default GameForm;
