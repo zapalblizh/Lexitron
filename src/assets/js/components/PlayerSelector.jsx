@@ -1,12 +1,21 @@
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {GameContext} from "../GameContext.jsx";
 
 export const PlayerSelector = () => {
     const {players, setPlayers} = useContext(GameContext);
 
+    // On first render, sets first player as current player
+    useEffect(() => {
+        setPlayers(prevPlayers =>
+            prevPlayers.map((player, index) => ({
+                ...player,
+                currentPlayer: index === 0
+            }))
+        );
+    }, []);
+
     const handlePlayerSelect = (id) => {
         setPlayers(prevPlayers => {
-
             return prevPlayers.map(player => {
                 return {...player, currentPlayer: (player.id === id) ? !player.currentPlayer : false};
             })

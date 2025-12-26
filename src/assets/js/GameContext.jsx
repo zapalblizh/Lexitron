@@ -34,7 +34,7 @@ export const GameProvider = ({children}) => {
     for (let i = 0; i < INITIAL_PLAYER_COUNT; i++) {
         const newPlayer = {
             name: `Player ${i + 1}`,
-            id: nanoid(),
+            id: i + 1,
             currentPlayer: false,
             score: 0,
             turns: []
