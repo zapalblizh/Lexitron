@@ -7,7 +7,7 @@ const renderPlayers = (players) => {
 
     for (let i = 0; i < players.length; i++) {
         elements.push(
-            <div className="w-full flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 hover:-mx-3 px-3 hover:rounded-lg transition-all duration-200">
+            <div key={i} className="w-full flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 hover:-mx-3 px-3 hover:rounded-lg transition-all duration-200">
                 <span className="font-bold text-gray-400 mr-3">{i + 1}</span>
                 <span className="flex-1 font-medium text-gray-800">{sortedPlayers[i].name}</span>
                 <span className="font-bold text-[#667EE9] text-lg">{sortedPlayers[i].score}</span>
