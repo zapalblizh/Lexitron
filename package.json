@@ -1,5 +1,5 @@
 {
-  "name": "lexitron",
+  "name": "lexiscore",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:zapalblizh/Lexitron.git"
+    "url": "git@github.com:zapalblizh/Lexiscore.git"
   },
   "keywords": [
     "vite",
     "react",
     "tailwindcss",
-    "lexitron",
+    "lexiscore",
     "wordscore",
     "tracker"
   ],

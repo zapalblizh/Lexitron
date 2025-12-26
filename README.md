@@ -1,4 +1,4 @@
-# Lexitron
+# Lexiscore
 
 Work in Progress Web Application for Scrabble Game Tracking
 

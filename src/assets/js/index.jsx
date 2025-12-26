@@ -3,7 +3,7 @@ import { StrictMode } from 'react';
 import App from "./App.jsx";
 import {GameProvider} from "./GameContext.jsx";
 
-createRoot(document.getElementById('lexitron-game')).render(
+createRoot(document.getElementById('lexiscore-game')).render(
     <StrictMode>
         <GameProvider>
             <App />
