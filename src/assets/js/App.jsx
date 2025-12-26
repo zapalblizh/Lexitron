@@ -9,20 +9,17 @@ function App() {
     const {gameStart} = useContext(GameContext);
 
     return (
-        <div className="">
-            <div className="max-w-fit mx-auto lg:max-w-full lg:mx-0 w-full grid grid-span-1 lg:grid-cols-6 gap-x-4">
-                <div className="col-span-1 lg:col-span-4">
-                    <Board />
-                </div>
+        <div className="flex flex-col lg:flex-row gap-4 max-w-fit mx-auto lg:max-w-full lg:mx-0 w-full ">
+            <div className="col-span-1 lg:col-span-4 max-w-fit">
+                <Board />
+            </div>
 
-                <div className="flex flex-col justify-center lg:justify-start gap-4 py-8 col-span-1 lg:col-span-2">
+            <div className="w-full">
+                <div className="mx-auto max-w-sm flex flex-col justify-center lg:justify-start gap-4">
                     {gameStart ? <GameForm /> : <StartForm />}
 
                     <Leaderboard />
                 </div>
-            </div>
-            <div>
-
             </div>
         </div>
     )

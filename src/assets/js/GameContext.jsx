@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from "react";
-import {nanoid} from "nanoid";
 import multipliers from "../_data/multipliers.js";
 
 export const GameContext = createContext();

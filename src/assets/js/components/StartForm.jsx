@@ -1,7 +1,6 @@
 import {PlayerTile} from "./PlayerTile.jsx";
 import {useContext} from "react";
 import {GameContext} from "../GameContext.jsx";
-import {nanoid} from "nanoid";
 import {ErrorComponent} from "./ErrorComponent.jsx";
 
 export const StartForm = () => {
@@ -14,7 +13,7 @@ export const StartForm = () => {
         else {
             const newPlayer = {
                 name: `Player ${players.length + 1}`,
-                id: nanoid(),
+                id: `${players.length + 1}`,
                 currentPlayer: false,
                 score: 0,
                 turns: []
@@ -27,19 +26,21 @@ export const StartForm = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center w-full gap-2">
+        <div className="flex flex-col justify-center gap-2">
             <div className="flex justify-between items-center">
                 <span className="text-2xl font-bold">Players</span>
                 <button type="button" onClick={() => AddPlayer()} className="btn btn--xs">Add</button>
             </div>
 
-            <form className="max-w-96 flex flex-col items-center gap-4 px-6 py-3 w-full mx-auto justify-center bg-cursor border-2 border-ink rounded-xl" onSubmit={(event) => {
+            <form className="flex flex-col items-center gap-4 p-2 sm:px-6 sm:py-3 justify-center bg-cursor border-2 border-ink rounded-xl" onSubmit={(event) => {
                 event.preventDefault();
                 setGameStart(true);
             }}>
-                {players.map((player) => (
-                    <PlayerTile key={player.id} Player={player} />
-                ))}
+                <div className="grid gap-4">
+                    {players.map((player) => (
+                        <PlayerTile key={player.id} Player={player} />
+                    ))}
+                </div>
 
                 <div className={errorMessage ? "block" : "hidden"}>
                     <ErrorComponent />

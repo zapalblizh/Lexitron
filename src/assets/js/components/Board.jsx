@@ -41,28 +41,26 @@ export const Board = () => {
 
     // Renders grid and rerenders grid on any useState update
     return (
-        <div className="flex justify-center items-center">
-            <div className="grid border border-skin-600  w-fit" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
-                {board.map((rowArr, row) =>
-                    rowArr.map((cell, col) => {
-                        const isStart = gameState.start.row === row && gameState.start.col === col;
-                        const isEnd = gameState.end.row === row && gameState.end.col === col;
+        <div className="grid border border-skin-600  w-fit" style={{gridTemplateColumns: `repeat(${SIZE_OF_GRID}, 1fr)`,}}>
+            {board.map((rowArr, row) =>
+                rowArr.map((cell, col) => {
+                    const isStart = gameState.start.row === row && gameState.start.col === col;
+                    const isEnd = gameState.end.row === row && gameState.end.col === col;
 
-                        const selectedClass = isStart ? "select-start border-2 md:border-4 border-green-500"
-                            : isEnd ? "select-end border-2 md:border-4 border-red-500"
-                                : "";
+                    const selectedClass = isStart ? "select-start border-2 md:border-4 border-green-500"
+                        : isEnd ? "select-end border-2 md:border-4 border-red-500"
+                            : "";
 
-                        return (
-                            <div onClick={() => UpdateSelectionStatus(row, col)} key={`${row}-${col}`} data-row={row} data-col={col}
-                                 className={`tile border-board-lines ${board[row][col].bonus || ""} ${selectedClass}`}>
-                                <button className="w-full h-full" disabled={!gameStart}>
-                                    <span className={'tile-text'}>{board[row][col].letter}</span>
-                                </button>
-                            </div>
-                        );
-                    })
-                )}
-            </div>
+                    return (
+                        <div onClick={() => UpdateSelectionStatus(row, col)} key={`${row}-${col}`} data-row={row} data-col={col}
+                             className={`tile border-board-lines ${board[row][col].bonus || ""} ${selectedClass}`}>
+                            <button className="w-full h-full" disabled={!gameStart}>
+                                <span className={'tile-text'}>{board[row][col].letter}</span>
+                            </button>
+                        </div>
+                    );
+                })
+            )}
         </div>
     );
 }

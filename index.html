@@ -1,22 +1,31 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/assets/css/main.css">
-    <title>Lexitron</title>
-  </head>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="/src/assets/css/main.css">
+        <title>Lexitron</title>
+    </head>
 
-  <body class="flex flex-col w-full bg-skin-400 text-ink font-sans">
-    <header class="p-0 sm:p-6" x-ref="header">
-        <nav class="max-w-7xl rounded-none sm:rounded-md bg-burgundy text-cursor mx-auto px-6 py-3 flex items-center justify-between" aria-label="Global">
-            <span>Lexitron</span>
-            <span>Made by AZ</span>
-        </nav>
-    </header>
+    <body class="mx-auto max-w-7xl flex flex-col w-full bg-skin-400 text-ink font-sans">
+        <header x-ref="header">
+            <nav class="bg-burgundy text-cursor mx-auto px-6 py-3 flex items-center justify-between"
+                 aria-label="Global">
+                <span>Lexitron</span>
+                <span>Made by AZ</span>
+            </nav>
+        </header>
 
-    <main id="lexitron-game" class="mx-auto flex w-full max-w-7xl flex-auto flex-col justify-stretch px-2 py-8 sm:py-12 lg:px-8">
-        <script type="module" src="/src/assets/js/index.jsx"></script>
-    </main>
-  </body>
+        <main id="lexitron-game"
+              class="mx-auto flex w-full flex-auto flex-col justify-stretch px-2 py-8 sm:py-12 lg:px-8">
+            <script type="module" src="/src/assets/js/index.jsx"></script>
+        </main>
+
+        <footer>
+            <div class="text-center text-xs bg-burgundy text-cursor mx-auto px-6 py-3">
+                ©2026 Lexitron. All rights reserved.<br>
+                The project is open source and licensed under the MIT License.
+            </div>
+        </footer>
+    </body>
 </html>
