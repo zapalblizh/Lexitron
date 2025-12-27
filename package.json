@@ -29,6 +29,7 @@
   "dependencies": {
     "@netlify/vite-plugin": "^2.7.19",
     "@tailwindcss/vite": "^4.1.12",
+    "netlify-cli": "^23.13.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tailwindcss": "^4.1.12",
