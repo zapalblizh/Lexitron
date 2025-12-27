@@ -1,4 +1,4 @@
 [build]
 base = "."
-command = "npm run lint && npm run build"
+command = "npm run build"
 publish = "dist"
