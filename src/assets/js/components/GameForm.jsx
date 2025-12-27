@@ -19,7 +19,21 @@ export const GameForm = () => {
 
         if (validWord.valid) {
             let turnsIntroduced = [];
-            let currentTurn = CreateTurn(board, turns, players, gameState, currentWord);
+
+            if (!validWord.blankPositions.length > 0) {
+                setBoard(prev => {
+                    const next = prev.map(row => row.map(cell => ({...cell})));
+
+                    for (let pos of validWord.blankPositions) {
+                        let coordsArr = pos.position.split("-");
+                        next[coordsArr[0]][coordsArr[1]].blank = true;
+                    }
+
+                    return next;
+                })
+            }
+
+            let currentTurn = CreateTurn(board, turns, players, gameState, validWord.processedWord, validWord.blankPositions);
             turnsIntroduced.push(currentTurn);
 
             // TODO: Check for bonus words created
@@ -45,7 +59,7 @@ export const GameForm = () => {
             });
 
             setBoard(prev => {
-                return UpdateGrid(prev, currentTurn, gameState, currentWord);
+                return UpdateGrid(prev, currentTurn, gameState, validWord.processedWord);
             })
 
             // Reset gameState and currentWord
@@ -86,6 +100,7 @@ export const GameForm = () => {
     return (
         <div className="flex flex-col gap-2">
             <span className="text-2xl font-bold">Play a Word</span>
+            <span className="text-lg">If your word uses a blank letter, put your letter in square brackets [A]</span>
 
             <form onSubmit={HandleSubmit} className="w-full mx-auto flex flex-col justify-center items-center gap-4 p-4 bg-cursor border-2 rounded-xl">
                 <div className="flex flex-wrap items-center justify-center gap-4">

@@ -1,6 +1,28 @@
 export const VerifyWord = (board, gameState, currentWord, players, gridSize, wordDict) => {
+
+    // Gets direction of placement
+    const direction = gameState.start.row === gameState.end.row ? "horizontal" : "vertical"
+
+    // Filter out blank tiles from word + insert into board
+    const blankLetterPattern = /\[([a-zA-Z])\]/g;
+    const blankPositions = [];
+
+    let processedWord = currentWord;
+    let match;
+
+    // Finds all blank tiles
+    while ((match = blankLetterPattern.exec(currentWord)) !== null) {
+        processedWord = processedWord.replace(match[0], match[1]);
+
+        blankPositions.push({
+            position: direction === "horizontal"
+                ? `${gameState.start.row}-${match.index - 2}`
+                : `${match.index - 2}-${gameState.start.col}`,
+        });
+    }
+
     // Checks if word is empty
-    if (currentWord.length === 0) {
+    if (processedWord.length === 0) {
         return { valid: false, message: 'Enter a word to submit.'};
     }
     // Checks if start and end positions are selected
@@ -12,11 +34,11 @@ export const VerifyWord = (board, gameState, currentWord, players, gridSize, wor
     const selectedDistance = Math.abs(gameState.end.row - gameState.start.row || gameState.end.col - gameState.start.col) + 1;
 
     // Compares selected distance with word length
-    if (currentWord.length !== selectedDistance) {
+    if (processedWord.length !== selectedDistance) {
         return { valid: false, message: 'Select a correct distance or make word same length as selected distance.'};
     }
     // Checks if word contains only letters, and flags it if not
-    if (!(/^[a-zA-Z]+$/.test(currentWord))) {
+    if (!(/^[a-zA-Z]+$/.test(processedWord))) {
         return { valid: false, message: 'Word must contain only letters.'};
     }
 
@@ -30,8 +52,6 @@ export const VerifyWord = (board, gameState, currentWord, players, gridSize, wor
         return { valid: false, message: 'Select start and end of your word top to bottom or left to right.'};
     }
 
-    // Gets direction of placement
-    const direction = gameState.start.row === gameState.end.row ? "horizontal" : "vertical"
     const arrayRange = (start, stop, step) =>
         Array.from(
             { length: (stop - start) / step + 1 },
@@ -55,7 +75,7 @@ export const VerifyWord = (board, gameState, currentWord, players, gridSize, wor
         // Conflict verifier
         for (let key in wordRange) {
             let letter = board[gameState.start.row][key].letter;
-            if (letter !== '' && letter !== currentWord[inc])
+            if (letter !== '' && letter !== processedWord[inc])
                 return { valid: false, message: 'Select a word that fits in the selected tiles and does not replace existing letters.'};
             inc++;
         }
@@ -74,7 +94,7 @@ export const VerifyWord = (board, gameState, currentWord, players, gridSize, wor
         // Conflict verifier
         for (let key in wordRange) {
             let letter = board[key][gameState.start.col].letter;
-            if (letter !== '' && letter !== currentWord[inc])
+            if (letter !== '' && letter !== processedWord[inc])
                 return { valid: false, message: 'Select a word that fits in the selected tiles and does not replace existing letters.'};
             inc++;
         }
@@ -91,9 +111,9 @@ export const VerifyWord = (board, gameState, currentWord, players, gridSize, wor
     }
 
     // Check if word is in dictionary
-    if (!wordDict.has(currentWord.toUpperCase())) {
+    if (!wordDict.has(processedWord.toUpperCase())) {
         return { valid: false, message: 'Please enter a word that is included in the English dictionary.'};
     }
 
-    return {valid: true, message: ''};
+    return {valid: true, message: '', blankPositions, processedWord};
 }

@@ -16,7 +16,8 @@ export const GameProvider = ({children}) => {
             Array.from({ length: SIZE_OF_GRID }, () => ({
                 letter: '',
                 bonus: null,
-                bonusAvailable: false
+                bonusAvailable: false,
+                blank: false
             }))
         );
 
